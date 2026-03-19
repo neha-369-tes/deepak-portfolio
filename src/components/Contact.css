@@ -1,0 +1,289 @@
+.contact {
+  padding: 100px 20px;
+  background: var(--white);
+  position: relative;
+  z-index: 10;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.centered-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.contact-form.full-width {
+  width: 100%;
+  max-width: 800px; /* Optional: Constrain width for readability */
+}
+
+.collaboration-areas {
+  /* Match the theme - remove opaque dark bg */
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  color: var(--dark-gray);
+  margin-top: 10px;
+}
+
+.collaboration-areas h4 {
+  font-size: 14px;
+  color: #666; /* Subtler title */
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: none; /* Removed border */
+  padding-bottom: 0;
+  display: block;
+}
+
+.collaboration-areas ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  counter-reset: collab-counter; /* Init counter */
+}
+
+.collaboration-areas li {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Ensure clean sans-serif */
+  font-size: 32px; /* Big, like the image */
+  font-weight: 900; /* Extra Bold */
+  text-transform: uppercase; /* Uppercase */
+  letter-spacing: -0.5px;
+  padding: 10px 0;
+  margin-bottom: 0;
+  display: flex;
+  align-items: baseline;
+  cursor: pointer;
+  
+  /* Remove background and shadow */
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  
+  /* Dark text on white bg */
+  color: #1a1a1a;
+  -webkit-text-fill-color: #1a1a1a;
+  transition: all 0.3s ease;
+  line-height: 1.1;
+}
+
+.collaboration-areas li::before {
+  counter-increment: collab-counter;
+  content: "0" counter(collab-counter);
+  font-size: 16px;
+  font-weight: 400;
+  color: #999; /* Dimmed number color */
+  margin-right: 20px;
+  transform: translateY(-5px); /* Align with cap height */
+  font-family: monospace; /* Optional: stylistic choice for numbers */
+}
+
+/* Hover Effect - Simple Lift or Color Change */
+.collaboration-areas li:hover {
+  /* No glass shimmer on white bg, just simple interaction */
+  transform: translateX(10px);
+  color: var(--primary-red); /* Match theme red */
+  -webkit-text-fill-color: var(--primary-red);
+  background: transparent;
+  filter: none;
+  animation: none;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.contact-method {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: var(--light-gray);
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-red);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.contact-method:hover {
+  background: rgba(255, 0, 0, 0.05);
+  transform: translateX(10px);
+}
+
+.method-icon {
+  font-size: 28px;
+  min-width: 40px;
+}
+
+.method-content h4 {
+  font-size: 16px;
+  color: var(--dark-gray);
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.method-content p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--primary-red);
+  color: var(--white);
+  border-radius: 50%;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.social-link:hover {
+  background: var(--dark-red);
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--dark-gray);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 15px;
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  padding: 15px 40px;
+  background: var(--primary-red);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  background: var(--dark-red);
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  border-left: 4px solid #4caf50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact {
+    padding: 60px 20px;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .contact-info {
+    gap: 30px;
+  }
+
+  .collaboration-areas {
+    padding: 20px;
+  }
+
+  .collaboration-areas h4 {
+    font-size: 15px;
+  }
+
+  .collaboration-areas li {
+    font-size: 13px;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}

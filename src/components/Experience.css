@@ -1,0 +1,359 @@
+
+/* Main Timeline Styles - Modern Glassmorphism */
+.main-timeline5 {
+  overflow: hidden;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  padding: 60px 0;
+}
+
+/* Vertical Line - Subtle Glass Rod */
+.main-timeline5:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: rgba(200, 16, 46, 0.15); /* Faint red */
+  transform: translateX(-50%);
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+  z-index: 0;
+}
+
+/* Timeline Item Container */
+.main-timeline5 .timeline {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin-bottom: 60px;
+}
+
+.main-timeline5 .timeline:last-child {
+  margin-bottom: 0;
+}
+
+/* Timeline Icon (Center) - Glass Sphere */
+.main-timeline5 .timeline-icon {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  font-size: 32px;
+  line-height: 110px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Icon internal elements */
+.main-timeline5 .timeline-icon .fa {
+  font-size: 28px;
+  color: var(--black, #333);
+  margin-bottom: 4px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.main-timeline5 .timeline-icon .year {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-red, #c8102e);
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+
+/* Hover Effect on Icon - "Liquid" Pop */
+.main-timeline5 .timeline:hover .timeline-icon {
+  transform: translateX(-50%) scale(1.1);
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 15px 35px rgba(200, 16, 46, 0.2),
+    0 5px 15px rgba(0,0,0,0.05),
+    inset 0 0 20px rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.main-timeline5 .timeline:hover .timeline-icon .fa {
+  transform: scale(1.1);
+  color: var(--primary-red, #c8102e);
+}
+
+/* Timeline Content - Frosted Glass Card */
+.main-timeline5 .timeline-content {
+  width: 42%;
+  float: left;
+  padding: 35px;
+  background: rgba(255, 255, 255, 0.2); /* Very subtle base */
+  border-radius: 24px;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  position: relative;
+  z-index: 5;
+  transition: all 0.4s ease;
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* Shiny "Liquid" overlay effect on hover */
+.main-timeline5 .timeline-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.main-timeline5 .timeline:hover .timeline-content::after {
+  left: 150%;
+  transition: 0.7s ease-in-out;
+}
+
+.main-timeline5 .timeline-content:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(0,0,0,0.05); /* Deeper shadow */
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Typography */
+.main-timeline5 .title {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--black, #222);
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 1.5px;
+  background: linear-gradient(45deg, #111, #444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Modern gradient text */
+}
+
+.main-timeline5 .company {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  color: var(--primary-red, #c8102e); /* Keep solid red for brand */
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: block;
+  letter-spacing: 2px;
+  opacity: 0.9;
+}
+
+.main-timeline5 .description {
+  font-size: 15px;
+  color: #444; /* Slightly darker for readability on glass */
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+  opacity: 0.85; 
+}
+
+
+/* Connector Arrows - Adjusted for Glass look */
+.main-timeline5 .timeline-content:before {
+  content: "";
+  position: absolute;
+  top: 45px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 12px;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 0.4);
+  filter: drop-shadow(2px 0 2px rgba(0,0,0,0.05));
+  z-index: -1;
+  transition: all 0.4s ease;
+}
+
+
+/* Left Side Specifics */
+.main-timeline5 .timeline:nth-child(2n+1) .timeline-content {
+  float: left;
+  margin-right: 0;
+}
+.main-timeline5 .timeline:nth-child(2n+1) .timeline-content:before {
+  right: -12px;
+  border-width: 10px 0 10px 12px;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 0.4); /* Pointing right */
+}
+.main-timeline5 .timeline:nth-child(2n+1):hover .timeline-content:before {
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.7);
+}
+
+
+/* Right Side Specifics */
+.main-timeline5 .timeline:nth-child(2n) .timeline-content {
+  float: right;
+  text-align: left;
+}
+.main-timeline5 .timeline:nth-child(2n) .timeline-content:before {
+  left: -12px;
+  border-width: 10px 12px 10px 0;
+  border-color: transparent rgba(255, 255, 255, 0.4) transparent transparent; /* Pointing left */
+}
+.main-timeline5 .timeline:nth-child(2n):hover .timeline-content:before {
+    border-color: transparent rgba(255, 255, 255, 0.7) transparent transparent;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 767px) {
+  .main-timeline5:before {
+    left: 40px;
+    background: rgba(200, 16, 46, 0.2); /* Slightly more visible on mobile */
+  }
+  
+  .main-timeline5 .timeline {
+    margin-bottom: 40px;
+  }
+  
+  .main-timeline5 .timeline-icon {
+    width: 80px;
+    height: 80px;
+    left: 40px;
+    line-height: 80px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.4); /* Brighter base on mobile */
+  }
+  .main-timeline5 .timeline-icon .fa { font-size: 22px; }
+  .main-timeline5 .timeline-icon .year { font-size: 10px; }
+  
+  .main-timeline5 .timeline-content {
+    width: calc(100% - 90px);
+    float: right;
+    margin-left: 90px;
+    text-align: left;
+    padding: 25px;
+  }
+  
+  /* Fix arrows for mobile (all point left towards the line) */
+  .main-timeline5 .timeline-content:before,
+  .main-timeline5 .timeline:nth-child(2n) .timeline-content:before,
+  .main-timeline5 .timeline:nth-child(odd) .timeline-content:before {
+    left: -12px;
+    right: auto;
+    border-width: 10px 12px 10px 0;
+    border-color: transparent rgba(255, 255, 255, 0.4) transparent transparent;
+  }
+  
+  .main-timeline5 .title { font-size: 20px; }
+}
+
+/* Clearfix */
+.timeline:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.main-timeline5 .timeline {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.main-timeline5 .timeline.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Theme Adaptation */
+:root {
+    --red: #c8102e;     /* Marvel Red style */
+    --black: #111;
+    --white: #fff;
+}
+
+/* Company Logo */
+.main-timeline5 .company-logo {
+  display: block;
+  max-width: 140px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 15px 0 15px auto; /* Default: right align for odd items */
+  border-radius: 8px;
+  background: white; /* Ensure transparency looks good */
+  padding: 10px;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.08), 
+    0 0 0 1px rgba(0,0,0,0.03); /* Crisp card border */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.main-timeline5 .company-logo:hover {
+  transform: scale(1.08) rotate(2deg);
+}
+
+/* Even items (Right Side) - Logo Left Align */
+.main-timeline5 .timeline:nth-child(even) .company-logo {
+  margin: 15px auto 15px 0;
+}
+
+/* Responsive Logo */
+@media screen and (max-width: 767px) {
+  .main-timeline5 .company-logo,
+  .main-timeline5 .timeline:nth-child(even) .company-logo {
+    display: block;
+    margin: 15px auto; /* Center on mobile */
+  }
+}
+
+/* Responsive */
+@media only screen and (max-width: 767px) {
+    .main-timeline5 .timeline {
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+    .main-timeline5 .timeline-icon {
+        float: none;
+        margin: 0 auto 20px;
+        width: 100px;
+        height: 100px;
+        font-size: 14px; /* Smaller font for year */
+    }
+    .main-timeline5 .timeline-content {
+        width: 100%;
+        float: none;
+        text-align: center;
+    }
+    .main-timeline5 .year {
+        font-size: 18px;
+    }
+}

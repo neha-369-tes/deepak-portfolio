@@ -1,0 +1,381 @@
+#achievements {
+    padding: 4rem 2rem;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.achievements-title {
+    text-align: center;
+    font-size: 3.5rem; /* Larger Title */
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    /* Continuous, Slow Street-Light Pulse */
+    animation: textPulse 4s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 0, 222, 0.2),
+        0 0 20px rgba(255, 0, 222, 0.1);
+        opacity: 0.8;
+    }
+    50% {
+        /* Brighter peak, simulating the light surging */
+        text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 0, 222, 0.5),
+        0 0 30px rgba(255, 0, 222, 0.3),
+        0 0 40px rgba(255, 0, 222, 0.2);
+        opacity: 1;
+    }
+    /* Subtle flicker moments to keep the "broken street light" feel without keying off completely */
+    25% { opacity: 0.95; }
+    26% { opacity: 0.85; }
+    75% { opacity: 0.95; }
+    76% { opacity: 0.85; }
+}
+
+/* Also apply to item titles */
+.item span.item-title {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff; /* White text per user request */
+    margin-top: 10px;
+    text-transform: uppercase;
+    /* Continuous slow white pulse */
+    animation: textPulseWhite 4s ease-in-out infinite;
+}
+
+@keyframes textPulseWhite {
+    0%, 100% {
+        text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.2);
+        opacity: 0.9;
+    }
+    50% {
+        text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.3);
+        opacity: 1;
+    }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkboxes {
+  width: 100%;
+  padding: 2rem 0;
+  display: flex;
+  text-align: left;
+  flex-wrap: wrap;
+  justify-content:center
+}
+
+label {
+  display: block;
+}
+
+
+.box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  min-height: 400px; /* Adjust as needed */
+}
+
+.item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 250px;
+  height: 180px;
+  margin: 10px;
+  border-radius: 20px; /* Smooth corners */
+  
+  /* Apple Matte Glass Effect */
+  background: rgba(40, 40, 40, 0.4); /* Darker matte */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Highlight inner rim */
+  
+  padding: 6px; 
+  padding-bottom: 30px; /* Extra space at bottom for description */
+
+  overflow: hidden;
+  will-change: transform, opacity, box-shadow;
+  /* "Liquid" organic movement */
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.item:hover {
+  /* Liquid Glow Lift */
+  box-shadow: 
+    0 20px 40px -10px rgba(220, 20, 60, 0.5), 
+    0 0 20px rgba(220, 20, 60, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  border-color: rgba(220, 20, 60, 0.6);
+  transform: translateY(-8px) scale(1.05);
+  background: rgba(50, 50, 50, 0.6);
+  z-index: 10;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Default: fit whole image in box (letterboxed if needed) */
+    background-color: #000;
+    border-radius: 16px;
+    filter: brightness(0.95);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Override for Championship: Zoom in to faces (cover) instead of letterboxing */
+.item[data-category="championship"] img {
+    object-fit: cover;
+    object-position: top center;
+}
+
+/* Override for Gojans Festive: Fill the box */
+.item[data-category="gojans"] img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.item:hover img {
+    filter: brightness(1.15) saturate(1.1);
+    transform: scale(1.1); /* Zoom in smoothly */
+}
+
+/* Liquid ripple sheen effect */
+.item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: none;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.item:hover::after {
+    left: 200%;
+    transition: left 0.8s ease-in-out;
+}
+
+.item-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  
+  /* Glass style for title too */
+  background: rgba(20, 20, 20, 0.85); /* Darker contrast */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  border-radius: 0 0 20px 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 3;
+}
+
+.item:hover .item-title {
+    transform: translateY(0);
+    bottom: 0;
+}
+
+.achievements-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .achievements-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .description-panel {
+    width: 30%;
+    position: sticky;
+    top: 20px;
+  }
+  
+  .gallery-panel {
+    width: 70%;
+  }
+}
+
+.description-panel {
+  color: #fff;
+  padding: 1.5rem;
+  /* Apple-style Matte Glass */
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* "Apple-like" smooth ease */
+}
+
+.description-panel.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.description-panel h3 {
+  font-size: 1.8rem;
+  color: #dc143c;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.description-panel p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.tag-button {
+  align-items: center;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 500;
+  justify-content: center;
+  margin: 6px;
+  padding: 0.7rem 2rem;
+  position: relative;
+  white-space: nowrap;
+  color: #ccc;
+  overflow: hidden;
+
+  /* Apple Matte Glass Button Base */
+  background: rgba(40, 40, 40, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tag-button:hover {
+  transform: translateY(-2px);
+  background: rgba(60, 60, 60, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.tag-button.active {
+  color: #fff;
+  border-color: rgba(220, 20, 60, 0.5);
+  box-shadow: 0 8px 20px rgba(220, 20, 60, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* "Smooth red moving like loading from right to left" - Liquid Style */
+.tag-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0; /* Load from right */
+  width: 0%;
+  height: 100%;
+  
+  /* Liquid Red Gradient */
+  background: linear-gradient(90deg, #800000, #dc143c); 
+  
+  /* Smooth liquid transition */
+  transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
+  z-index: -1;
+  border-radius: 99px;
+}
+
+.tag-button.active::before {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+/* Liquid Sheen for Buttons */
+.tag-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+  );
+  transition: left 0.6s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tag-button:hover::after {
+  left: 100%;
+}
+
+.tag-button span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hide the old input/span logic */
+.tag-button input, .tag-button .checked {
+  display: none;
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deepak. Portfolio</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; overflow-x:hidden; }
+body { font-family: system-ui, sans-serif; background:#fff; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 3rem;
+  background:rgba(255,255,255,0.95);
+  border-bottom:1px solid #eee;
+}
+.logo { font-size:1.4rem; font-weight:300; letter-spacing:-0.02em; }
+.logo b { color:#c8102e; font-weight:400; }
+nav ul { list-style:none; display:flex; gap:2rem; }
+nav a { text-decoration:none; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#333; }
+
+#hero {
+  height:100vh;
+  background:#fff;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0 3rem 6rem;
+  position:relative; overflow:hidden;
+}
+.dot-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:radial-gradient(circle,#c8102e22 1px,transparent 1px);
+  background-size:44px 44px;
+}
+.hero-inner { position:relative; z-index:2; }
+.hero-tag { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:#c8102e; margin-bottom:1rem; }
+.hero-h1 { font-size:clamp(3rem,8vw,6.5rem); font-weight:300; line-height:0.95; letter-spacing:-0.03em; color:#111; margin-bottom:1.4rem; }
+.hero-h1 em { font-style:italic; color:#c8102e; }
+.hero-p { font-size:0.95rem; color:#666; max-width:400px; line-height:1.7; margin-bottom:2.2rem; }
+.btns { display:flex; gap:1rem; }
+.btn-r { background:#c8102e; color:#fff; border:none; padding:0.85rem 1.8rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; }
+.btn-o { background:transparent; color:#c8102e; border:1.5px solid #c8102e; padding:0.85rem 1.8rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; }
+.scroll-label { position:absolute; bottom:2rem; left:3rem; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:#c8102e; z-index:2; }
+
+#about { min-height:100vh; background:#f9f9f9; padding:8rem 3rem 6rem; }
+.about-tag { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:#c8102e; margin-bottom:0.6rem; }
+.about-h2 { font-size:clamp(2.2rem,5vw,4rem); font-weight:300; color:#111; margin-bottom:0.8rem; }
+.about-rule { width:2.5rem; height:2px; background:#c8102e; margin-bottom:3rem; }
+.about-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; }
+.col-tag { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:#c8102e; margin-bottom:0.8rem; }
+.col-p { font-size:0.9rem; color:#555; line-height:1.75; }
+
+/* WAVE — hidden until JS triggers it */
+#waveOverlay {
+  position:fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  z-index:150;
+  pointer-events:none;
+  display:none;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Deepak<b>.</b></div>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#">Expertise</a></li>
+    <li><a href="#">Achievements</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="dot-bg"></div>
+  <div class="hero-inner">
+    <p class="hero-tag">Product Designer &amp; Strategist</p>
+    <h1 class="hero-h1">Crafting<br/><em>Experiences</em><br/>That Matter</h1>
+    <p class="hero-p">I help companies build products people love — from first sketch to shipped feature.</p>
+    <div class="btns">
+      <button class="btn-r">Learn More</button>
+      <button class="btn-o">Get In Touch</button>
+    </div>
+  </div>
+  <span class="scroll-label">↓ Scroll to Explore</span>
+</section>
+
+<svg id="waveOverlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="wg1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ff8709"/>
+      <stop offset="100%" stop-color="#f7bdf8"/>
+    </linearGradient>
+    <linearGradient id="wg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffd9b0"/>
+      <stop offset="100%" stop-color="#ff8709"/>
+    </linearGradient>
+  </defs>
+  <path id="wp0" fill="url(#wg2)"></path>
+  <path id="wp1" fill="url(#wg1)"></path>
+</svg>
+
+<section id="about">
+  <p class="about-tag">About</p>
+  <h2 class="about-h2">Who I Am</h2>
+  <div class="about-rule"></div>
+  <div class="about-grid">
+    <div>
+      <p class="col-tag">Background</p>
+      <p class="col-p">Over a decade working at the intersection of design, technology, and human behaviour. I've led design at startups and scaled products used by millions.</p>
+    </div>
+    <div>
+      <p class="col-tag">What I Do</p>
+      <p class="col-p">I translate complex problems into clear, elegant solutions. From UX research to high-fidelity prototyping and design systems that scale.</p>
+    </div>
+    <div>
+      <p class="col-tag">Vision</p>
+      <p class="col-p">Technology should feel human. My goal is to build the invisible bridge between what a product can do and what people actually need.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+
+  const overlay = document.getElementById('waveOverlay');
+  const wp      = [document.getElementById('wp0'), document.getElementById('wp1')];
+
+  const N   = 10;    // points per path
+  const NP  = 2;     // number of paths
+  const DM  = 0.3;   // random point delay max
+  const DP  = 0.25;  // delay between paths
+  const DUR = 0.9;   // tween duration
+
+  // Two rows of points — values represent y position in SVG viewBox (0-100)
+  // 100 = bottom of screen, 0 = top of screen
+  let pts    = [Array(N).fill(100), Array(N).fill(100)];
+  let pDelay = Array(N).fill(0);
+  let busy   = false;
+
+  /* Redraw both SVG paths based on current pts values.
+     fromBottom=true  → path fills from wavy edge DOWN to y=100 (bottom of screen)
+     fromBottom=false → path fills from y=0 (top) DOWN to wavy edge */
+  function draw(fromBottom) {
+    for (let i = 0; i < NP; i++) {
+      let p = pts[i], d = '';
+      if (fromBottom) {
+        d = `M 0 ${p[0]} C`;
+        for (let j = 0; j < N-1; j++) {
+          let x = (j+1)/(N-1)*100, cx = x-(1/(N-1)*100)/2;
+          d += ` ${cx} ${p[j]} ${cx} ${p[j+1]} ${x} ${p[j+1]}`;
+        }
+        d += ` V 100 H 0 Z`;
+      } else {
+        d = `M 0 0 V ${p[0]} C`;
+        for (let j = 0; j < N-1; j++) {
+          let x = (j+1)/(N-1)*100, cx = x-(1/(N-1)*100)/2;
+          d += ` ${cx} ${p[j]} ${cx} ${p[j+1]} ${x} ${p[j+1]}`;
+        }
+        d += ` V 0 H 0 Z`;
+      }
+      wp[i].setAttribute('d', d);
+    }
+  }
+
+  /* Animate all pts toward `target` (0 = top of screen, 100 = bottom of screen)
+     fromBottom controls which draw mode is used during this phase */
+  function phase(target, fromBottom, done) {
+    for (let j = 0; j < N; j++) pDelay[j] = Math.random() * DM;
+    let tl = gsap.timeline({
+      onUpdate: () => draw(fromBottom),
+      onComplete: done,
+      defaults: { ease: 'power2.inOut', duration: DUR }
+    });
+    for (let i = 0; i < NP; i++) {
+      let offset = DP * (target === 0 ? i : (NP-i-1));
+      for (let j = 0; j < N; j++) {
+        tl.to(pts[i], { [j]: target }, pDelay[j] + offset);
+      }
+    }
+  }
+
+  /* ── SCROLL DOWN: Hero → About ──────────────────────────────
+     pts start at 100 (wave hidden below screen, fromBottom mode)
+     Phase 1: pts 100→0  fromBottom=true  → wave RISES from bottom, covers screen
+     Phase 2: pts 0→100  fromBottom=false → wave EXITS out the top               */
+  function runDown() {
+    if (busy) return;
+    busy = true;
+    pts[0].fill(100); pts[1].fill(100);
+    overlay.style.display = 'block';
+    draw(true); // draw starting state (wave fully below screen = invisible)
+
+    phase(0, true, () => {
+      // Screen fully covered. Switch to top-anchor mode for exit.
+      pts[0].fill(0); pts[1].fill(0);
+      draw(false);
+      phase(100, false, () => {
+        overlay.style.display = 'none';
+        busy = false;
+      });
+    });
+  }
+
+  /* ── SCROLL UP: About → Hero ────────────────────────────────
+     pts start at 0 (wave hidden above screen, fromBottom=false mode means full cover at 100)
+     Phase 1: pts 0→100  fromBottom=false → wave DROPS from top, covers screen
+     Phase 2: pts 0→100  fromBottom=true  → wave EXITS out the bottom             */
+  function runUp() {
+    if (busy) return;
+    busy = true;
+    pts[0].fill(0); pts[1].fill(0);
+    overlay.style.display = 'block';
+    draw(false); // draw starting state (wave fully above screen = invisible at y=0)
+
+    phase(100, false, () => {
+      // Screen fully covered. Switch to bottom-anchor mode for exit.
+      pts[0].fill(0); pts[1].fill(0);
+      draw(true);
+      phase(100, true, () => {
+        overlay.style.display = 'none';
+        busy = false;
+      });
+    });
+  }
+
+  /* ── SCROLL LISTENER ────────────────────────────────────────
+     Boundary = hero.offsetHeight (exact pixel where hero ends, about begins)
+     Going down past it  → runDown()
+     Coming back up past it → runUp()                                          */
+  const hero = document.getElementById('hero');
+  let lastY = window.scrollY;
+  let side  = 'hero'; // which side of the boundary we're currently on
+
+  window.addEventListener('scroll', () => {
+    const y     = window.scrollY;
+    const limit = hero.offsetHeight;
+    const down  = y > lastY;
+    lastY = y;
+
+    if (busy) return;
+
+    if (down && side === 'hero' && y >= limit) {
+      side = 'about';
+      runDown();
+    } else if (!down && side === 'about' && y < limit) {
+      side = 'hero';
+      runUp();
+    }
+  }, { passive: true });
+
+})();
+</script>
+</body>
+</html>

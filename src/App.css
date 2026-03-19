@@ -1,0 +1,45 @@
+.app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--white);
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: var(--primary-red);
+  z-index: 1000;
+  transition: width 0.2s ease;
+}
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
+.footer {
+  background: var(--white);
+  color: var(--dark-gray);
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.footer p {
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px;
+    font-size: 12px;
+  }
+}

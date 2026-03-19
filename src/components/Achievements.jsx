@@ -1,0 +1,167 @@
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
+import './Achievements.css';
+
+gsap.registerPlugin(Flip);
+
+const achievements = [
+  { id: '50+events', title: '50+ Events', image: '/achievements/50+events/1.jpeg' },
+  { id: '50+events', title: '50+ Events', image: '/achievements/50+events/2.jpeg' },
+  { id: 'championship', title: 'Championship', image: '/achievements/champioship/1.jpg' },
+  { id: 'championship', title: 'Championship', image: '/achievements/champioship/2.JPG' },
+  { id: 'championship', title: 'Championship', image: '/achievements/champioship/4.JPG' },
+  { id: 'hindustan', title: 'Hindustan', image: '/achievements/hindustan/1.jpg' },
+  { id: 'hindustan', title: 'Hindustan', image: '/achievements/hindustan/2.jpg' },
+  { id: 'hindustan', title: 'Hindustan', image: '/achievements/hindustan/3.jpg' },
+  { id: 'mentorship', title: 'Mentorship', image: '/achievements/mentorship/IMG-20250731-WA0015.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/1.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/2.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/3.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/4.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/5.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/7.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/8.jpg' },
+  { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/9.jpg' },
+  { id: 'cit', title: 'CIT', image: '/achievements/cit/1.jpg' },
+  { id: 'cit', title: 'CIT', image: '/achievements/cit/2.jpg' },
+];
+
+const filters = [
+  { id: 'all', label: 'All', description: 'Explore a complete visual journey showcasing diverse achievements, competitive triumphs, and large-scale event organization across multiple domains.' },
+  { id: '50+events', label: '50+ Events', description: 'Coordinated and managed over 50 varied events, ranging from technical workshops to large-scale cultural festivals, demonstrating strong leadership and logistical expertise.' },
+  { id: 'championship', label: 'Championship', description: 'Secured top positions in competitive arenas, proving excellence, strategy, and teamwork in high-stakes environments.' },
+  { id: 'hindustan', label: 'Hindustan', description: 'Key initiatives and significant participations during my tenure at Hindustan, highlighting academic dedication and extracurricular versatility.' },
+  { id: 'mentorship', label: 'Mentorship', description: 'Guiding peers and juniors through dedicated mentorship sessions, fostering a community of shared learning and professional growth.' },
+  { id: 'gojans', label: 'Gojans Festive', description: 'Lead organizer and active participant in the vibrant Gojans Festive, managing complex logistics and delivering memorable on-stage performances.' },
+  { id: 'cit', label: 'CIT', description: 'Milestone achievements and recognitions earned at CIT, marking significant steps in my professional and personal development.' },
+];
+
+const Achievements = () => {
+  const containerRef = useRef(null);
+  const itemsRef = useRef([]);
+  // Store the Flip state of the previous render
+  const lastStateRef = useRef(null);
+  
+  const [activeCategory, setActiveCategory] = React.useState('all');
+  const [failedImages, setFailedImages] = React.useState(new Set());
+
+  // Filter based on single active category
+  const visibleAchievements = React.useMemo(() => {
+    return achievements.filter(item => {
+        if (failedImages.has(item.image)) return false;
+        if (activeCategory === 'all') return true;
+        return item.id === activeCategory;
+    });
+  }, [activeCategory, failedImages]);
+
+  // Get active description
+  const activeDescription = filters.find(f => f.id === activeCategory)?.description || '';
+
+  // Use useLayoutEffect to handle layout animations before browser paints
+  React.useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Get current elements in DOM
+    const items = itemsRef.current.slice(0, visibleAchievements.length);
+    const validItems = items.filter(el => el && el.isConnected);
+    const itemsContainer = container.querySelector('.box-container');
+    const descriptionPanel = container.querySelector('.description-panel');
+    
+    const targets = [itemsContainer, descriptionPanel, ...validItems].filter(Boolean);
+
+    // If we have a previous state, animate FROM it
+    if (lastStateRef.current) {
+        Flip.from(lastStateRef.current, {
+            targets: targets, // Animate these targets
+            duration: 0.7,
+            stagger: 0.08, // Stagger helps items look like they are "moving towards" each other sequentially
+            ease: "power2.inOut",
+            scale: false,
+            absolute: true, // Make items absolute during animation
+            onEnter: elements => gsap.fromTo(elements, 
+                { opacity: 0, scale: 0.8, y: 30 }, 
+                { opacity: 1, scale: 1, y: 0, duration: 0.5 }
+            ),
+            onLeave: elements => gsap.to(elements, { opacity: 0, scale: 0.8, y: -30, duration: 0.3 }) 
+        });
+    }
+
+    // Capture the NEW state for the NEXT render
+    // We capture specific targets
+    lastStateRef.current = Flip.getState(targets);
+    
+  }, [activeCategory, visibleAchievements]);
+
+
+  const handleCategoryClick = (id) => {
+      if (id === activeCategory) return;
+      setActiveCategory(id);
+  };
+
+
+  const handleImageError = (imageSrc) => {
+      console.log("Image failed:", imageSrc);
+      setFailedImages(prev => {
+          const newSet = new Set(prev);
+          newSet.add(imageSrc);
+          return newSet;
+      });
+  };
+
+  return (
+    <section id="achievements" className="achievements-section">
+        {/* Marker: Move to far right to avoid content overlap */}
+        <div id="marker-achievements" className="scroll-marker" style={{ top: '50%', right: '2%' }}></div>
+        <h2 className="achievements-title">Achievements</h2>
+        <div className="container" ref={containerRef}>
+            <div className="buttons-container">
+                <div className="checkboxes">
+                {filters.map((filter) => (
+                    <button 
+                        key={filter.id}
+                        className={`tag-button ${activeCategory === filter.id ? 'active' : ''}`}
+                        onClick={() => handleCategoryClick(filter.id)}
+                    >
+                        {filter.label}
+                    </button>
+                ))}
+                </div>
+            </div>
+            
+            <div className="achievements-content">
+                {/* Description Panel - Shows when a specific category is active, or even for All */}
+                <div className={`description-panel ${activeCategory ? 'active' : ''}`}>
+                    <h3>{filters.find(f => f.id === activeCategory)?.label}</h3>
+                    <p>{activeDescription}</p>
+                </div>
+
+                <div className="gallery-panel">
+                    <div className="box-container">
+                        {visibleAchievements.map((item, index) => (
+                        <div 
+                            className="item" 
+                            data-category={item.id} 
+                            key={`${item.id}-${item.image}`} // Stable unique key
+                            ref={el => itemsRef.current[index] = el}
+                        >
+                            <img
+                            src={item.image}
+                            alt={item.title}
+                            loading="lazy"
+                            decoding="async"
+                            onError={() => handleImageError(item.image)}
+                            />
+                            <span className="item-title">{item.title}</span>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  );
+};
+
+export default Achievements;

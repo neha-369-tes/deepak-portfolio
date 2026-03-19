@@ -1,0 +1,264 @@
+/* SocialFab.css */
+
+/* ── FAB WRAPPER — Positioned Absolutely in parent container ── */
+.fab-main-wrap {
+    /* Use relative flow in parent container */
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 72px;
+    height: 72px;
+    z-index: 999;
+    cursor: pointer;
+}
+  
+  /* backdrop that blurs the page when menu is open */
+  .fab-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+    pointer-events: none;
+    z-index: 998;
+  }
+  .fab-backdrop.open {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: all;
+  }
+  
+  /* Blueprint State */
+.fab-main-wrap.blueprint {
+  pointer-events: none; /* Not clickable until docked */
+}
+
+.fab-blueprint-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  opacity: 1;
+  transition: opacity 0.5s;
+  z-index: 0;
+}
+
+.fab-main-wrap.docked .fab-blueprint-ring {
+  opacity: 0; /* Hide blueprint when docked (filled by button) */
+}
+
+.fab-content {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1001 !important; /* Ensure content is above styles */
+}
+
+.fab-content.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── SOCIAL ITEMS — absolutely positioned, explode radially ── */
+  .fab-item {
+    position: absolute;
+    bottom: 36px; /* Center relative to parent */
+    right:  36px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(50%, 50%) scale(0.3) rotate(var(--rot, 0deg));
+    transition:
+      opacity  0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .fab-item.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(calc(50% + var(--tx)), calc(50% + var(--ty))) scale(1) rotate(0deg);
+  }
+  
+  .fab-btn {
+    width: 50px; /* Slightly smaller to fit more items */
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background-size: 200% 200%; /* For potential animation */
+  }
+  .fab-btn:hover {
+    transform: scale(1.25) rotate(-5deg);
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Liquid Gradient Text on Hover */
+  .fab-label {
+    font-size: 0.70rem;
+    font-family: system-ui, sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    
+    background: linear-gradient(90deg, #fff, #bbb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* Standard property */
+    color: transparent; /* Fallback */
+    
+    padding: 2px 4px;
+    border-radius: 4px; 
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-weight: 700;
+  }
+  
+  .fab-item:hover .fab-label {
+     /* Liquid Text Color on Hover */
+     background: linear-gradient(90deg, #FFD700, #ff8709, #ff4d6d);
+     background-size: 200% auto;
+     animation: liquidText 2s linear infinite;
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+  }
+
+  @keyframes liquidText {
+      to { background-position: 200% center; }
+  }
+  
+  /* ── DECORATIVE RINGS around main button ── */
+  .ring {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255,255,255,0.15);
+    animation: ringSpin 8s linear infinite;
+    pointer-events: none;
+  }
+  .ring2 {
+    inset: -18px;
+    border-color: rgba(200,16,46,0.25);
+    animation: ringSpin 12s linear infinite reverse;
+    border-style: dotted;
+  }
+  
+  .blink {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,16,46,0.35) 0%, transparent 70%);
+    animation: blink-ring 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  /* "tap me!" label */
+  .fab-cta {
+    position: absolute;
+    top: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-family: system-ui, sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    white-space: nowrap;
+    animation: faFloat 3s ease-in-out infinite;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    background: rgba(0,0,0,0.5);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .fab-main-wrap.open .fab-cta { opacity: 0; }
+  
+  /* The main button */
+  .fab-main {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    /* Colorful gradient */
+    background: conic-gradient(from 0deg, #c8102e, #ff4d6d, #ff8709, #c8102e);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2.2rem; /* Make emoji bigger */
+    text-shadow: 0 2px 5px rgba(0,0,0,0.4); /* Make it pop */
+    z-index: 1002; 
+    position: relative; /* ensure z-index applies */
+    transition: transform 0.2s, background 0.5s; /* Smooth hover */
+    box-shadow: 0 0 15px rgba(200, 16, 46, 0.4); /* Glow */
+  }
+  .fab-main:hover {
+     transform: scale(1.1) rotate(5deg);
+     box-shadow: 0 0 25px rgba(255, 77, 109, 0.6);
+  }
+
+  .fab-main {
+    box-shadow: 0 0 30px rgba(200,16,46,0.6), 0 0 60px rgba(200,16,46,0.2);
+    position: relative;
+    z-index: 2;
+    animation: faFloat 3s ease-in-out infinite, ringSpin 6s linear infinite;
+    transition: box-shadow 0.3s, background 0.4s;
+  }
+  .fab-main-wrap.open .fab-main {
+    animation: wiggle 0.5s ease forwards; /* Stop spinning on open if desired, or keep it */
+    background: conic-gradient(from 0deg, #2a2a2a, #444, #2a2a2a);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  
+  /* burst particles */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    pointer-events: none;
+    z-index: 1005; /* High z-index to be on top */
+  }
+  .particle.pop {
+    animation: particle-out 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  
+  /* Animations */
+  @keyframes faFloat {
+    0%,100% { transform: translateY(0px) rotate(-2deg); }
+    50%      { transform: translateY(-8px) rotate(2deg); }
+  }
+  @keyframes ringSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes blink-ring {
+    0%,100% { opacity:0.7; transform:scale(1); }
+    50%     { opacity:0.2; transform:scale(1.6); }
+  }
+  @keyframes wiggle {
+    0%,100%{ transform:rotate(0deg) scale(1); }
+    20%    { transform:rotate(-12deg) scale(1.05); }
+    40%    { transform:rotate(10deg) scale(1.05); }
+    60%    { transform:rotate(-6deg) scale(1.02); }
+    80%    { transform:rotate(4deg) scale(1.02); }
+  }
+  @keyframes particle-out {
+    0%   { transform: translate(0,0) scale(1); opacity:1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity:0; }
+  }

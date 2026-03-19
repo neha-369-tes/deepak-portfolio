@@ -1,0 +1,37 @@
+
+/* Company Badge Styles */
+.company-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(200, 16, 46, 0.2);
+    margin: 15px 0 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.company-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(200, 16, 46, 0.15);
+    border-color: rgba(200, 16, 46, 0.5);
+}
+
+.Badge-logo {
+    height: 38px; /* Increased Size */
+    width: auto;
+    object-fit: contain;
+}
+
+.company-badge span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500; /* Bolder */
+    font-size: 15px; /* Larger */
+    color: #222;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}

@@ -1,0 +1,122 @@
+
+.scroll-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    pointer-events: none;
+    z-index: -1;
+    /* Ensure it doesn't affect layout flow */
+    visibility: hidden; 
+}
+
+.moving-element-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70px; 
+    height: 70px;
+    z-index: 50;
+    pointer-events: none;
+    will-change: transform, top, left;
+}
+
+.ball-float-container {
+    width: 100%;
+    height: 100%;
+    /* Continuous floating movement like water */
+    animation: floatWater 3s ease-in-out infinite;
+
+    /* Base Variables: High-Gloss Black Glass (for White BG) */
+    --glass-highlight: rgba(255, 255, 255, 1);    /* Sharp Specular */
+    --glass-transparency: rgba(30, 30, 30, 0.6);  /* Semi-transparent dark glass */
+    --glass-midtone: rgba(0, 0, 0, 0.9);          /* Deep core */
+    --glass-rim: rgba(255, 255, 255, 0.4);        /* Sharp rim reflection */
+    --glass-border: rgba(255, 255, 255, 0.2);     /* Definitive edge */
+    
+    /* Effects: Sharp & Shiny, No Glow */
+    --shadow-inner-reflection: rgba(255, 255, 255, 0.2);
+    --shadow-inner-light: rgba(255, 255, 255, 0.4);
+    --shadow-outer-glow: transparent;                      /* REMOVED GLOW */
+    --shadow-drop: rgba(0, 0, 0, 0.5);                     /* Sharp drop shadow */
+
+    /* Transition for smooth color change */
+    transition: all 0.5s ease;
+}
+
+/* White Glass Variant Class (for Black BG) */
+.ball-float-container.white-glass {
+    /* High-Gloss White/Clear Glass */
+    --glass-highlight: rgba(255, 255, 255, 1);
+    --glass-transparency: rgba(255, 255, 255, 0.2); /* Very clear */
+    --glass-midtone: rgba(255, 255, 255, 0.5);      /* Frosted core */
+    --glass-rim: rgba(255, 255, 255, 0.9);          /* Bright rim */
+    --glass-border: rgba(255, 255, 255, 0.8);       /* Crisp edge */
+    
+    /* Effects: Shiny, No Halo */
+    --shadow-inner-reflection: rgba(200, 200, 200, 0.6);
+    --shadow-inner-light: rgba(255, 255, 255, 0.9);
+    --shadow-outer-glow: transparent;               /* REMOVED GLOW */
+    --shadow-drop: rgba(0, 0, 0, 0.8);              /* Strong shadow to ground it */
+}
+
+.ball-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
+    /* Glowing Liquid Glassmorphism Look using variables */
+    background: radial-gradient(circle at 35% 35%, 
+        var(--glass-highlight) 0%,   
+        var(--glass-transparency) 20%, 
+        var(--glass-midtone) 50%,    
+        var(--glass-rim) 100%       
+    );
+    
+    /* Complex shadows using variables */
+    box-shadow: 
+        inset -8px -8px 20px var(--shadow-inner-reflection), 
+        inset 10px 10px 20px var(--shadow-inner-light), 
+        0 0 20px var(--shadow-outer-glow),            
+        0 15px 35px var(--shadow-drop);
+        
+    backdrop-filter: blur(5px) saturate(1.5);
+    border: 1px solid var(--glass-border);
+    
+    will-change: transform, background, box-shadow;
+    overflow: hidden;
+    transition: background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+/* Add an internal shimmer to enhance the liquid feel */
+.ball-inner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    opacity: 0.6;
+    animation: shimmer 5s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes floatWater {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.scroll-marker {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    visibility: hidden; /* Markers are invisible anchors */
+    pointer-events: none;
+}
