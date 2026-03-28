@@ -125,39 +125,40 @@ label {
 
 
 .box-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  min-height: 400px; /* Adjust as needed */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 400px;
+  justify-items: center;
+  align-items: center;
 }
 
 .item {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
   height: 180px;
-  margin: 10px;
-  border-radius: 20px; /* Smooth corners */
+  border-radius: 20px;
   
   /* Apple Matte Glass Effect */
-  background: rgba(40, 40, 40, 0.4); /* Darker matte */
+  background: rgba(40, 40, 40, 0.4);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 
     0 8px 32px 0 rgba(0, 0, 0, 0.37),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Highlight inner rim */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   
-  padding: 6px; 
-  padding-bottom: 30px; /* Extra space at bottom for description */
-
+  padding: 6px;
+  padding-bottom: 30px;
   overflow: hidden;
   will-change: transform, opacity, box-shadow;
-  /* "Liquid" organic movement */
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
