@@ -124,95 +124,147 @@ export default function Balatro({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const renderer = new Renderer({ antialias: false, alpha: false });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 1);
-
-    let program;
-    let isScrolling = false;
-    let scrollTimeout;
-
-    function resize() {
-      renderer.setSize(container.offsetWidth, container.offsetHeight);
-      if (program) {
-        program.uniforms.iResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
+    
+    // Preserve canvas if it already exists and is healthy
+    let existingCanvas = container.querySelector('canvas');
+    let renderer = null;
+    let gl = null;
+    
+    if (existingCanvas && existingCanvas.getContext) {
+      try {
+        gl = existingCanvas.getContext('webgl2') || existingCanvas.getContext('webgl');
+        if (gl && gl.getParameter(gl.CONTEXT_LOST_WEBGL) === false) {
+          console.log("[v0] Reusing existing canvas");
+          renderer = { gl, setSize: (w, h) => {
+            existingCanvas.width = w;
+            existingCanvas.height = h;
+          }};
+        }
+      } catch(e) {
+        console.log("[v0] Canvas context lost, recreating");
       }
     }
     
-    // Use ResizeObserver instead of just window resize to catch dynamically changing container heights
-    const resizeObserver = new ResizeObserver(() => resize());
-    resizeObserver.observe(container);
+    // Create new renderer if needed
+    if (!renderer) {
+      renderer = new Renderer({ antialias: false, alpha: false, preserveDrawingBuffer: true });
+      gl = renderer.gl;
+      gl.clearColor(0, 0, 0, 1);
+    }
 
-    const geometry = new Triangle(gl);
-    program = new Program(gl, {
-      vertex: vertexShader,
-      fragment: fragmentShader,
-      uniforms: {
-        iTime: { value: 0 },
-        iResolution: {
-          value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height]
-        },
-        uSpinRotation: { value: spinRotation },
-        uSpinSpeed: { value: spinSpeed },
-        uOffset: { value: offset },
-        uColor1: { value: hexToVec4(color1) },
-        uColor2: { value: hexToVec4(color2) },
-        uColor3: { value: hexToVec4(color3) },
-        uContrast: { value: contrast },
-        uLighting: { value: lighting },
-        uSpinAmount: { value: spinAmount },
-        uPixelFilter: { value: pixelFilter },
-        uSpinEase: { value: spinEase },
-        uIsRotate: { value: isRotate },
-        uMouse: { value: [0.5, 0.5] }
+    let program;
+    let animationFrameId;
+    let isCanvasHealthy = true;
+
+    function resize() {
+      if (!container || !container.offsetWidth || !container.offsetHeight) return;
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      if (program && gl) {
+        try {
+          program.uniforms.iResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
+        } catch (e) {
+          console.log("[v0] Error updating resolution:", e.message);
+        }
+      }
+    }
+    
+    // Use ResizeObserver to handle container resizing
+    const resizeObserver = new ResizeObserver(() => {
+      if (isCanvasHealthy) {
+        resize();
       }
     });
+    resizeObserver.observe(container);
 
-    const mesh = new Mesh(gl, { geometry, program });
-    let animationFrameId;
+    try {
+      const geometry = new Triangle(gl);
+      program = new Program(gl, {
+        vertex: vertexShader,
+        fragment: fragmentShader,
+        uniforms: {
+          iTime: { value: 0 },
+          iResolution: {
+            value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height]
+          },
+          uSpinRotation: { value: spinRotation },
+          uSpinSpeed: { value: spinSpeed },
+          uOffset: { value: offset },
+          uColor1: { value: hexToVec4(color1) },
+          uColor2: { value: hexToVec4(color2) },
+          uColor3: { value: hexToVec4(color3) },
+          uContrast: { value: contrast },
+          uLighting: { value: lighting },
+          uSpinAmount: { value: spinAmount },
+          uPixelFilter: { value: pixelFilter },
+          uSpinEase: { value: spinEase },
+          uIsRotate: { value: isRotate },
+          uMouse: { value: [0.5, 0.5] }
+        }
+      });
 
-    function update(time) {
+      const mesh = new Mesh(gl, { geometry, program });
+
+      function update(time) {
+        try {
+          // Check if WebGL context is still valid
+          if (gl.isContextLost()) {
+            console.log("[v0] WebGL context lost, stopping render loop");
+            isCanvasHealthy = false;
+            return;
+          }
+          
+          program.uniforms.iTime.value = time * 0.001;
+          renderer.render({ scene: mesh });
+        } catch (error) {
+          console.log("[v0] Render error:", error.message);
+          isCanvasHealthy = false;
+          return;
+        }
+        
+        if (isCanvasHealthy) {
+          animationFrameId = requestAnimationFrame(update);
+        }
+      }
+
+      // Only append canvas if it's not already there
+      if (!container.contains(gl.canvas)) {
+        container.appendChild(gl.canvas);
+      }
+      
       animationFrameId = requestAnimationFrame(update);
-      program.uniforms.iTime.value = time * 0.001;
-      renderer.render({ scene: mesh });
-    }
-    animationFrameId = requestAnimationFrame(update);
-    container.appendChild(gl.canvas);
-
-    // Handle scroll smoothness - keep animation running during scroll
-    function handleScrollStart() {
-      isScrolling = true;
-      clearTimeout(scrollTimeout);
-    }
-
-    function handleScrollEnd() {
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 150);
+      resize();
+    } catch (error) {
+      console.log("[v0] Setup error:", error.message);
+      isCanvasHealthy = false;
     }
 
     function handleMouseMove(e) {
-      if (!mouseInteraction) return;
-      const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
-      program.uniforms.uMouse.value = [x, y];
+      if (!mouseInteraction || !program || !isCanvasHealthy) return;
+      try {
+        const rect = container.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = 1.0 - (e.clientY - rect.top) / rect.height;
+        program.uniforms.uMouse.value = [x, y];
+      } catch (e) {
+        // Silent fail for mouse interaction
+      }
     }
 
-    window.addEventListener('scroll', handleScrollStart, { passive: true });
-    window.addEventListener('scrollend', handleScrollEnd, { passive: true });
-    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      resizeObserver.disconnect();
-      window.removeEventListener('scroll', handleScrollStart);
-      window.removeEventListener('scrollend', handleScrollEnd);
-      container.removeEventListener('mousemove', handleMouseMove);
-      if (container.contains(gl.canvas)) {
-        container.removeChild(gl.canvas);
+      try {
+        cancelAnimationFrame(animationFrameId);
+        resizeObserver.disconnect();
+        container.removeEventListener('mousemove', handleMouseMove);
+        
+        // Don't destroy the canvas - just stop rendering to preserve it
+        if (!gl.isContextLost && gl.canvas) {
+          gl.canvas.style.opacity = '1';
+        }
+      } catch (e) {
+        console.log("[v0] Cleanup error:", e.message);
       }
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [
     spinRotation,
@@ -227,8 +279,7 @@ export default function Balatro({
     pixelFilter,
     spinEase,
     isRotate,
-    mouseInteraction,
-    containerRef
+    mouseInteraction
   ]);
 
   return <div ref={containerRef} className="balatro-container" />;
