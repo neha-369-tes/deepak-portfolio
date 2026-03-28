@@ -1,0 +1,103 @@
+.grid-motion-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  perspective: 1000px;
+  /* Darken behind form with red gradient for hollow gaps*/
+  /* dynamic logic handled at bottom of file */
+  z-index: 0; 
+  pointer-events: none; /* Crucial so we can click form */
+}
+
+.grid-motion-wrapper {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.grid-motion-row {
+  display: flex;
+  gap: 3rem;
+  padding: 1rem 0;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.grid-motion-item {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+.grid-item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 40px;
+  pointer-events: none;
+}
+
+/* Let the overlay mask out the edges - seamlessly fade edge into surrounding background color */
+.grid-motion-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 0%, var(--gradient-color, #0a0505) 100%);
+  z-index: 2;
+}
+
+body.dark-mode .grid-motion-overlay {
+  /* Match the dark background */
+  background: radial-gradient(circle, transparent 0%, #0a0505 80%);
+}
+
+body:not(.dark-mode) .grid-motion-overlay {
+  /* Match the light background smoothly */
+  background: radial-gradient(circle, transparent 0%, #ffffff 80%);
+}
+
+/* Also ensure the background of contact doesn't clash */
+body.dark-mode .grid-motion-container {
+  /* dynamic logic handled at bottom of file */
+}
+
+body:not(.dark-mode) .grid-motion-container {
+  background: transparent; /* Clean transparent for white boxes over white background in light theme */
+}
+
+
+
+/* --- Extra image pop --- */
+.grid-item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 40px;
+  pointer-events: none;
+}
+
+

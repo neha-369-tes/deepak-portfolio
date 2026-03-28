@@ -22,13 +22,15 @@ main {
 
 .footer {
   background: var(--white);
-  color: var(--dark-gray);
+  color: #555;
   text-align: center;
   padding: 40px 20px;
   font-size: 13px;
   border-top: 1px solid var(--light-gray);
   line-height: 1.6;
   font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
 }
 
 .footer p {
@@ -39,7 +41,105 @@ main {
 /* Responsive */
 @media (max-width: 768px) {
   .footer {
-    padding: 30px 15px;
-    font-size: 12px;
-  }
+  background: var(--white);
+  color: #555;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
+}
+}
+
+
+body.dark-mode .footer {
+  background: var(--white);
+  color: #555;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
+}
+body.dark-mode .footer,
+body.dark-mode .footer p {
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .footer {
+  background: var(--white);
+  color: #555;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
+}
+body:not(.dark-mode) .footer,
+body:not(.dark-mode) .footer p {
+  color: #111111 !important;
+}
+
+/* Failsafe to ensure paragraphs show clearly inline */
+footer.footer p {
+    font-size: 14px;
+    z-index: 100;
+    opacity: 1 !important;
+}
+
+body.dark-mode footer.footer {
+  background: var(--white);
+  color: #555;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
+}
+
+body.dark-mode footer.footer p {
+    color: #ffffff !important;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2); 
+    font-weight: 600;
+}
+
+body:not(.dark-mode) footer.footer {
+  background: var(--white);
+  color: #555;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--light-gray);
+  line-height: 1.6;
+  font-weight: 300;
+  position: relative;
+  z-index: 9999; /* Fix overlapping invisible box from Contact page */
+}
+
+body:not(.dark-mode) footer.footer p {
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+/* Trigger Hot Reload */
+
+.neon-text-footer { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: inherit; }
+
+@media (max-width: 768px) {
+  .footer-content { padding: 15px 10px; gap: 8px !important; text-align: center; }
+  .footer-content img { height: 32px !important; }
+  footer.footer p { font-size: 13px !important; line-height: 1.4; padding: 0 10px; }
+  .neon-text-footer { font-size: 1.2rem !important; }
 }

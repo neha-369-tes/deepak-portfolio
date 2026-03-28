@@ -44,9 +44,10 @@ function App() {
         <Contact />
       </main>
       <footer className="footer">
-        <div className="footer-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+        <div className="footer-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
           <img src="/logos/Abz-Logo-Red-1.png" alt="Autobotz" style={{ height: '40px', opacity: 0.8 }} />
-          <p>&copy; 2025 All rights reserved @abz.dpakkk.gg & @Autobotz Pvt Ltd India | Designed with React & Framer Motion</p>
+          <p>All rights reserved</p>
+          <p className="neon-text-footer">DEVELOPED BY Neha Sathish</p>
         </div>
       </footer>
     </div>

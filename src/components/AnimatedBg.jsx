@@ -46,8 +46,12 @@ const AnimatedBg = () => {
         this.opacity = Math.max(0.1, Math.min(0.6, this.opacity))
       }
 
-      draw() {
-        ctx.fillStyle = `rgba(255, 0, 0, ${this.opacity})`
+      draw(isDarkMode) {
+        // Red particles normally, white particles in dark mode for contrast if preferred
+        // Or keep red particles and adjust opacity. Let's keep them Red/White dynamic
+        ctx.fillStyle = isDarkMode 
+          ? `rgba(255, 255, 255, ${this.opacity * 0.8})` 
+          : `rgba(255, 0, 0, ${this.opacity})`;
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
         ctx.fill()
@@ -61,19 +65,26 @@ const AnimatedBg = () => {
 
     // Animation loop
     const animate = () => {
-      // Gradient background
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-      gradient.addColorStop(0, '#ffffff')
-      gradient.addColorStop(0.5, '#fff5f5')
-      gradient.addColorStop(1, '#ffffff')
+      const isDarkMode = document.body.classList.contains('dark-mode');
       
+      // Dynamic gradient background based on theme
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+      if (isDarkMode) {
+        gradient.addColorStop(0, '#0a0505')
+        gradient.addColorStop(0.5, '#120505')
+        gradient.addColorStop(1, '#0a0505')
+      } else {
+        gradient.addColorStop(0, '#ffffff')
+        gradient.addColorStop(0.5, '#fff5f5')
+        gradient.addColorStop(1, '#ffffff')
+      }
+
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw grid pattern
-      ctx.strokeStyle = 'rgba(255, 0, 0, 0.03)'
-      ctx.lineWidth = 1
-      const gridSize = 50
+      const gridSize = 50;
+      // Dynamic grid pattern based on theme
+      ctx.strokeStyle = isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 0, 0, 0.03)'
 
       for (let i = 0; i < canvas.width; i += gridSize) {
         ctx.beginPath()
@@ -92,25 +103,7 @@ const AnimatedBg = () => {
       // Update and draw particles
       particles.forEach(particle => {
         particle.update()
-        particle.draw()
-      })
-
-      // Draw connections between nearby particles
-      particles.forEach((particle, i) => {
-        particles.slice(i + 1).forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x
-          const dy = particle.y - otherParticle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(255, 0, 0, ${(1 - distance / 100) * 0.2})`
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(otherParticle.x, otherParticle.y)
-            ctx.stroke()
-          }
-        })
+        particle.draw(isDarkMode)
       })
 
       animationId = requestAnimationFrame(animate)

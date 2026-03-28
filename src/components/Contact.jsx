@@ -1,7 +1,24 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import SocialFab from './SocialFab'
+import GridMotion from './GridMotion'
 import './Contact.css'
+
+// Standard brand logos to feed into the GridMotion
+const socialLogos = [
+  '/social/DISCORD.png',
+  '/social/FACEBOOK.avif',
+  '/social/instagram-new.jpg',
+  '/social/LINKEDIN.png',
+  '/social/MESSENGER.jpg',
+  '/social/PINTEREST.png',
+  '/social/SKYPE.png',
+  '/social/SNAPCHAT.jpg',
+  '/social/TELEGRAM.jpg',
+  '/social/TWITCH.png',
+  '/social/X.webp',
+  '/social/YOUTUBE.webp'
+];
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -48,10 +65,14 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="contact" style={{ position: 'relative' }}>
+    <section id="contact" className="contact" style={{ position: 'relative', overflow: 'hidden' }}> 
+      
+      {/* Background GridMotion Effect */}
+      <GridMotion items={socialLogos} />
+
       {/* Marker: Zag Left, Vertically Centered */}
       <div id="marker-contact" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
-      <div className="container">
+      <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         <motion.h2
           className="section-title"
           initial={{ opacity: 0, y: 20 }}

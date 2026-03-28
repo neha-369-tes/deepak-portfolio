@@ -107,7 +107,7 @@
 /* Skill Card - Glassmorphism Light Mode */
 .sk {
   flex: 0 0 320px; /* Fixed width cards */
-  background: rgba(255, 255, 255, 0.7); /* Frosted glass white */
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7)); /* Frosted glass white */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.8);
@@ -125,7 +125,7 @@
 
 .sk:hover {
   transform: translateY(-8px) scale(1.02);
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.9));
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.05),
     0 10px 10px -5px rgba(0, 0, 0, 0.02);

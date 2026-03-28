@@ -1,5 +1,15 @@
 import { motion } from 'framer-motion';
+import ImageTrail from './ImageTrail';
 import './Experience.css';
+
+const trailImages = [
+  '/achievements/50+events/1.jpeg',
+  '/achievements/champioship/1.jpg',
+  '/achievements/hindustan/1.jpg',
+  '/achievements/mentorship/IMG-20250731-WA0015.jpg',
+  '/achievements/gojans/1.jpg',
+  '/achievements/cit/1.jpg'
+];
 
 const experiences = [
   {
@@ -24,10 +34,11 @@ const Experience = () => {
     <section id="experience" className="experience-section" style={{ padding: "100px 0", background: "var(--off-white)", position: 'relative', borderTop: "1px solid var(--light-gray)" }}>
       {/* Marker: Zag Right, Vertically Centered */}
       <div id="marker-experience" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
-      
-      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
-        <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h2 className="experience-title" style={{ fontSize: '5rem', fontWeight: 700, color: 'var(--black)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none' }}>
+
+      <ImageTrail items={trailImages}>
+        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
+          <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <h2 className="experience-title" style={{ fontSize: '5rem', fontWeight: 700, color: 'var(--black)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none' }}>
             Work<span>.</span>Experience
           </h2>
         </div>
@@ -63,6 +74,7 @@ const Experience = () => {
           </div>
         </div>
       </div>
+      </ImageTrail>
     </section>
   );
 };

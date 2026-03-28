@@ -1,9 +1,33 @@
 import { motion } from 'framer-motion'
 import './Navbar.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Navbar = ({ scrollProgress }) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.body.classList.add('dark-mode');
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const nextMode = !prev;
+      if (nextMode) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      }
+      return nextMode;
+    });
+  };
 
   const navItems = [
     { name: 'Home', id: 'home' },
@@ -60,11 +84,27 @@ const Navbar = ({ scrollProgress }) => {
           ))}
         </div>
 
-        <button className="hamburger" onClick={toggleMenu}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div className="nav-actions">
+          <motion.button 
+            className="dark-mode-toggle glass-button"
+            onClick={toggleDarkMode}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Toggle Dark Mode"
+          >
+            {isDarkMode ? (
+              <i className="fa-solid fa-moon"></i>
+            ) : (
+              <i className="fa-solid fa-sun"></i>
+            )}
+          </motion.button>
+
+          <button className="hamburger" onClick={toggleMenu}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
     </motion.nav>
   )

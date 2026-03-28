@@ -294,7 +294,7 @@
 
 .mask-bottom {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
-  background: #ffffff;
+  background: var(--white);
 }
 
 /* The Katana Slash Line */
