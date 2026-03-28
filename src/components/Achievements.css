@@ -3,6 +3,9 @@
   min-height: 100vh;
   isolation: isolate;
   overflow: hidden;
+  will-change: auto;
+  /* Smooth compositing layer prevents jank during scroll */
+  transform: translateZ(0);
 }
 
 /* ✅ THE FIX — keep canvas alive during scroll */

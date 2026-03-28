@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 import './Balatro.css';
 
@@ -124,11 +124,13 @@ export default function Balatro({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const renderer = new Renderer();
+    const renderer = new Renderer({ antialias: false, alpha: false });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
 
     let program;
+    let isScrolling = false;
+    let scrollTimeout;
 
     function resize() {
       renderer.setSize(container.offsetWidth, container.offsetHeight);
@@ -177,6 +179,18 @@ export default function Balatro({
     animationFrameId = requestAnimationFrame(update);
     container.appendChild(gl.canvas);
 
+    // Handle scroll smoothness - keep animation running during scroll
+    function handleScrollStart() {
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+    }
+
+    function handleScrollEnd() {
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    }
+
     function handleMouseMove(e) {
       if (!mouseInteraction) return;
       const rect = container.getBoundingClientRect();
@@ -184,13 +198,20 @@ export default function Balatro({
       const y = 1.0 - (e.clientY - rect.top) / rect.height;
       program.uniforms.uMouse.value = [x, y];
     }
+
+    window.addEventListener('scroll', handleScrollStart, { passive: true });
+    window.addEventListener('scrollend', handleScrollEnd, { passive: true });
     container.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
+      window.removeEventListener('scroll', handleScrollStart);
+      window.removeEventListener('scrollend', handleScrollEnd);
       container.removeEventListener('mousemove', handleMouseMove);
-      container.removeChild(gl.canvas);
+      if (container.contains(gl.canvas)) {
+        container.removeChild(gl.canvas);
+      }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [
