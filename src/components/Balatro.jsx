@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 import './Balatro.css';
 
@@ -124,20 +124,22 @@ export default function Balatro({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const renderer = new Renderer();
+    
+    const renderer = new Renderer({ antialias: false, alpha: false });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
 
     let program;
+    let animationFrameId;
 
     function resize() {
+      if (!container || !container.offsetWidth || !container.offsetHeight) return;
       renderer.setSize(container.offsetWidth, container.offsetHeight);
-      if (program) {
+      if (program && gl) {
         program.uniforms.iResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
       }
     }
     
-    // Use ResizeObserver instead of just window resize to catch dynamically changing container heights
     const resizeObserver = new ResizeObserver(() => resize());
     resizeObserver.observe(container);
 
@@ -167,15 +169,16 @@ export default function Balatro({
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    let animationFrameId;
 
     function update(time) {
-      animationFrameId = requestAnimationFrame(update);
       program.uniforms.iTime.value = time * 0.001;
       renderer.render({ scene: mesh });
+      animationFrameId = requestAnimationFrame(update);
     }
-    animationFrameId = requestAnimationFrame(update);
+
     container.appendChild(gl.canvas);
+    resize();
+    animationFrameId = requestAnimationFrame(update);
 
     function handleMouseMove(e) {
       if (!mouseInteraction) return;
@@ -184,31 +187,18 @@ export default function Balatro({
       const y = 1.0 - (e.clientY - rect.top) / rect.height;
       program.uniforms.uMouse.value = [x, y];
     }
-    container.addEventListener('mousemove', handleMouseMove);
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (container.contains(gl.canvas)) {
+        container.removeChild(gl.canvas);
+      }
     };
-  }, [
-    spinRotation,
-    spinSpeed,
-    offset,
-    color1,
-    color2,
-    color3,
-    contrast,
-    lighting,
-    spinAmount,
-    pixelFilter,
-    spinEase,
-    isRotate,
-    mouseInteraction,
-    containerRef
-  ]);
+  }, []);
 
   return <div ref={containerRef} className="balatro-container" />;
 }
