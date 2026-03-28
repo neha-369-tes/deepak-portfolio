@@ -91,8 +91,11 @@ const Hero = () => {
       });
       
       gsap.set(slashRef.current, { 
+        xPercent: -50,
+        yPercent: -50,
+        rotation: -53.13,
         scaleX: 0, 
-        transformOrigin: "left center",
+        transformOrigin: "center center", // Scale out from the middle of the cut
         autoAlpha: 1
       });
       
@@ -100,12 +103,12 @@ const Hero = () => {
 
       // 2. The Katana Slash
       tl.to(slashRef.current, { 
-        duration: 0.15, 
+        duration: 0.4, 
         scaleX: 1, 
-        ease: "power4.out" 
+        ease: "power2.out" 
       })
       .to(slashRef.current, { 
-        duration: 0.1, 
+        duration: 0.2, 
         opacity: 0, 
         ease: "power2.in" 
       });
@@ -113,13 +116,13 @@ const Hero = () => {
       // 3. The Cut (Masks slide apart)
       // Remove opacity fade during movement to keep the "solid cut" look
       tl.to(maskTopRef.current, {
-        duration: 0.8,
+        duration: 1.8,
         xPercent: -100,
         yPercent: -100,
         ease: "power2.inOut"
-      }, "-=0.1")
+      }, "-=0.2")
       .to(maskBottomRef.current, {
-        duration: 0.8,
+        duration: 1.8,
         xPercent: 100,
         yPercent: 100,
         ease: "power2.inOut"
@@ -127,16 +130,16 @@ const Hero = () => {
       
       // Fade out masks at the end just in case
       .to([maskTopRef.current, maskBottomRef.current], {
-        duration: 0.2,
+        duration: 0.5,
         autoAlpha: 0
-      })
+      }, "-=0.3")
       
       // 4. Image Settles
       .to(imageRef.current, {
-        duration: 1.2,
+        duration: 1.5,
         scale: 1,
-        ease: "back.out(1.7)" // Use back ease for "pop"
-      }, "-=0.8");
+        ease: "back.out(1.5)" // slightly rounder bounce
+      }, "-=1.5");
 
     }, containerRef);
 
@@ -222,7 +225,9 @@ const Hero = () => {
         {/* Right Side: Katana Cut Image */}
         <div className="hero-image-wrapper">
             <div className="cut-container">
-                <div className="profile-image-container" ref={imageRef}>
+                {/* Autobotz Logo Behind the Person */}
+                <div className="hero-bg-logo-container" ref={imageRef}>
+                    <img src="/logos/Abz%20Logo%20Red-1.png" alt="Autobotz Logo Background" className="hero-bg-logo" />
                     <img src="/prof-pics/1.png" alt="Deepak Kathiravan" className="profile-img-natural" />
                 </div>
                 

@@ -21,13 +21,16 @@ const experiences = [
 
 const Experience = () => {
   return (
-    <section id="experience" className="experience-section" style={{ padding: "60px 0", position: 'relative' }}>
+    <section id="experience" className="experience-section" style={{ padding: "100px 0", background: "var(--off-white)", position: 'relative', borderTop: "1px solid var(--light-gray)" }}>
       {/* Marker: Zag Right, Vertically Centered */}
       <div id="marker-experience" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
+      
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
-        <h1 className="main-heading" style={{ textAlign: 'center', marginBottom: '50px', fontWeight: 'bold', fontSize: '40px', textTransform: 'uppercase', fontFamily: "'Oswald', sans-serif", letterSpacing: '2px' }}>
-          Works & Experience
-        </h1>
+        <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 className="experience-title" style={{ fontSize: '5rem', fontWeight: 700, color: 'var(--black)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none' }}>
+            Work<span>.</span>Experience
+          </h2>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="main-timeline5">

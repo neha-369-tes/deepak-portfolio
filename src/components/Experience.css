@@ -1,5 +1,10 @@
 
 /* Main Timeline Styles - Modern Glassmorphism */
+  
+.experience-title span {
+  color: var(--primary-red);
+}
+
 .main-timeline5 {
   overflow: hidden;
   position: relative;
@@ -335,25 +340,3 @@
   }
 }
 
-/* Responsive */
-@media only screen and (max-width: 767px) {
-    .main-timeline5 .timeline {
-        margin-top: 0;
-        margin-bottom: 30px;
-    }
-    .main-timeline5 .timeline-icon {
-        float: none;
-        margin: 0 auto 20px;
-        width: 100px;
-        height: 100px;
-        font-size: 14px; /* Smaller font for year */
-    }
-    .main-timeline5 .timeline-content {
-        width: 100%;
-        float: none;
-        text-align: center;
-    }
-    .main-timeline5 .year {
-        font-size: 18px;
-    }
-}

@@ -74,3 +74,4 @@ dist-ssr
 
 # OS
 Thumbs.db
+.vercel

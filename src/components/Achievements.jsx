@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
+import Balatro from './Balatro'; // Ensure you have this component in your folder
 import './Achievements.css';
 
 gsap.registerPlugin(Flip);
@@ -38,11 +39,12 @@ const filters = [
 ];
 
 const Achievements = () => {
+  const sectionRef = useRef(null);
   const containerRef = useRef(null);
   const itemsRef = useRef([]);
   // Store the Flip state of the previous render
   const lastStateRef = useRef(null);
-  
+
   const [activeCategory, setActiveCategory] = React.useState('all');
   const [failedImages, setFailedImages] = React.useState(new Set());
 
@@ -111,55 +113,77 @@ const Achievements = () => {
   };
 
   return (
-    <section id="achievements" className="achievements-section">
+    <section id="achievements" ref={sectionRef}>
+
+      {/* Simple — no portal needed */}
+      <div className="balatro-bg">
+        <Balatro
+          spinRotation={-2}
+          spinSpeed={7}
+          color1="#ec1313"
+          color2="#a9283b"
+          color3="#0d0204"
+          contrast={6.5}
+          lighting={1}
+          spinAmount={0.35}
+          pixelFilter={1950}
+        />
+      </div>
+
+      <div className="achievements-content">
         {/* Marker: Move to far right to avoid content overlap */}
         <div id="marker-achievements" className="scroll-marker" style={{ top: '50%', right: '2%' }}></div>
-        <h2 className="achievements-title">Achievements</h2>
-        <div className="container" ref={containerRef}>
-            <div className="buttons-container">
-                <div className="checkboxes">
-                {filters.map((filter) => (
-                    <button 
-                        key={filter.id}
-                        className={`tag-button ${activeCategory === filter.id ? 'active' : ''}`}
-                        onClick={() => handleCategoryClick(filter.id)}
-                    >
-                        {filter.label}
-                    </button>
-                ))}
-                </div>
-            </div>
-            
-            <div className="achievements-content">
-                {/* Description Panel - Shows when a specific category is active, or even for All */}
-                <div className={`description-panel ${activeCategory ? 'active' : ''}`}>
-                    <h3>{filters.find(f => f.id === activeCategory)?.label}</h3>
-                    <p>{activeDescription}</p>
-                </div>
+          
+          <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <h2 className="achievements-title">Achieve<span>.</span>ments</h2>
+          </div>
 
-                <div className="gallery-panel">
-                    <div className="box-container">
-                        {visibleAchievements.map((item, index) => (
-                        <div 
-                            className="item" 
-                            data-category={item.id} 
-                            key={`${item.id}-${item.image}`} // Stable unique key
-                            ref={el => itemsRef.current[index] = el}
-                        >
-                            <img
-                            src={item.image}
-                            alt={item.title}
-                            loading="lazy"
-                            decoding="async"
-                            onError={() => handleImageError(item.image)}
-                            />
-                            <span className="item-title">{item.title}</span>
-                        </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+          <div className="container" ref={containerRef}>
+              <div className="buttons-container">
+                  <div className="checkboxes">
+                  {filters.map((filter) => (
+                      <button 
+                          key={filter.id}
+                          className={`tag-button ${activeCategory === filter.id ? 'active' : ''}`}
+                          onClick={() => handleCategoryClick(filter.id)}
+                      >
+                          {filter.label}
+                      </button>
+                  ))}
+                  </div>
+              </div>
+              
+              <div className="achievements-content">
+                  {/* Description Panel - Shows when a specific category is active, or even for All */}
+                  <div className={`description-panel ${activeCategory ? 'active' : ''}`}>
+                      <h3>{filters.find(f => f.id === activeCategory)?.label}</h3>
+                      <p>{activeDescription}</p>
+                  </div>
+
+                  <div className="gallery-panel">
+                      <div className="box-container">
+                          {visibleAchievements.map((item, index) => (
+                          <div 
+                              className="item" 
+                              data-category={item.id} 
+                              key={`${item.id}-${item.image}`} // Stable unique key
+                              ref={el => itemsRef.current[index] = el}
+                          >
+                              <img
+                              src={item.image}
+                              alt={item.title}
+                              loading="lazy"
+                              decoding="async"
+                              onError={() => handleImageError(item.image)}
+                              />
+                              <span className="item-title">{item.title}</span>
+                          </div>
+                          ))}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </section>
   );
 };
