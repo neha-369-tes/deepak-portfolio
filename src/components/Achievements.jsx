@@ -28,15 +28,21 @@ const achievements = [
   { id: 'cit', title: 'CIT', image: '/achievements/cit/2.jpg' },
 ];
 
-const filters = [
+const mainFilters = [
   { id: 'all', label: 'All', description: 'Explore a complete visual journey showcasing diverse achievements, competitive triumphs, and large-scale event organization across multiple domains.' },
   { id: '50+events', label: '50+ Events', description: 'Coordinated and managed over 50 varied events, ranging from technical workshops to large-scale cultural festivals, demonstrating strong leadership and logistical expertise.' },
   { id: 'championship', label: 'Championship', description: 'Secured top positions in competitive arenas, proving excellence, strategy, and teamwork in high-stakes environments.' },
-  { id: 'hindustan', label: 'Hindustan', description: 'Key initiatives and significant participations during my tenure at Hindustan, highlighting academic dedication and extracurricular versatility.' },
   { id: 'mentorship', label: 'Mentorship', description: 'Guiding peers and juniors through dedicated mentorship sessions, fostering a community of shared learning and professional growth.' },
-  { id: 'gojans', label: 'Gojans Festive', description: 'Lead organizer and active participant in the vibrant Gojans Festive, managing complex logistics and delivering memorable on-stage performances.' },
-  { id: 'cit', label: 'CIT', description: 'Milestone achievements and recognitions earned at CIT, marking significant steps in my professional and personal development.' },
+  { id: 'college_events', label: 'College Events', description: 'High-impact college esports initiatives, structured tournament ecosystems, and large-scale student engagements across multiple campuses.' },
 ];
+
+const subFilters = [
+  { id: 'hindustan', label: 'Hindustan', description: 'Key initiatives and significant participations during my tenure at Hindustan, highlighting academic dedication and extracurricular versatility.' },
+  { id: 'gojans', label: 'Gojans Festive', description: 'Lead organizer and active participant in the vibrant Gojans Festive, managing complex logistics and delivering memorable on-stage performances.' },
+  { id: 'cit', label: 'CIT', description: 'Milestone achievements and recognitions earned at CIT, marking significant steps in my professional and personal development.' }
+];
+
+const filters = [...mainFilters, ...subFilters];
 
 const Achievements = () => {
   const sectionRef = useRef(null);
@@ -53,6 +59,9 @@ const Achievements = () => {
     return achievements.filter(item => {
         if (failedImages.has(item.image)) return false;
         if (activeCategory === 'all') return true;
+        if (activeCategory === 'college_events') {
+            return ['hindustan', 'gojans', 'cit'].includes(item.id);
+        }
         return item.id === activeCategory;
     });
   }, [activeCategory, failedImages]);
@@ -139,9 +148,24 @@ const Achievements = () => {
           </div>
 
           <div className="container" ref={containerRef}>
-              <div className="buttons-container">
+              <div className="buttons-container" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div className="checkboxes">
-                  {filters.map((filter) => (
+                  {mainFilters.map((filter) => {
+                      const isCollegeActive = filter.id === 'college_events' && ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory);
+                      return (
+                      <button 
+                          key={filter.id}
+                          className={`tag-button ${activeCategory === filter.id || isCollegeActive ? 'active' : ''}`}
+                          onClick={() => handleCategoryClick(filter.id)}
+                      >
+                          {filter.label}
+                      </button>
+                  )})}
+                  </div>
+                  
+                  {/* Collapsible Sub-filters for College Events */}
+                  <div className={`checkboxes sub-filters-row ${['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'show' : 'hide'}`} style={{ transition: 'opacity 0.4s ease, margin-top 0.4s ease', marginTop: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? '-20px' : '-40px', opacity: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 1 : 0, pointerEvents: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'auto' : 'none', position: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'relative' : 'absolute', padding: '0', display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  {subFilters.map((filter) => (
                       <button 
                           key={filter.id}
                           className={`tag-button ${activeCategory === filter.id ? 'active' : ''}`}
