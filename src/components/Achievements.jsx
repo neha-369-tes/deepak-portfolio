@@ -26,6 +26,7 @@ const achievements = [
   { id: 'gojans', title: 'Gojans Festive', image: '/achievements/gojans/9.jpg' },
   { id: 'cit', title: 'CIT', image: '/achievements/cit/1.jpg' },
   { id: 'cit', title: 'CIT', image: '/achievements/cit/2.jpg' },
+  { id: 'srm', title: 'SRM ZenithX\'26', image: '/achievements/mentorship/IMG-20250731-WA0015.jpg' },
 ];
 
 const mainFilters = [
@@ -37,9 +38,10 @@ const mainFilters = [
 ];
 
 const subFilters = [
-  { id: 'hindustan', label: 'Hindustan', description: 'Key initiatives and significant participations during my tenure at Hindustan, highlighting academic dedication and extracurricular versatility.' },
-  { id: 'gojans', label: 'Gojans Festive', description: 'Lead organizer and active participant in the vibrant Gojans Festive, managing complex logistics and delivering memorable on-stage performances.' },
-  { id: 'cit', label: 'CIT', description: 'Milestone achievements and recognitions earned at CIT, marking significant steps in my professional and personal development.' }
+  { id: 'hindustan', label: 'Hindustan', description: 'Guest Speaker & strategy lead for the Next Gen Esports Summit, driving tournament setups and industry-oriented career guidance.' },
+  { id: 'srm', label: 'SRM University', description: 'Main Guest Speaker & orchestrated multi-title BGMI/Free Fire tournaments at ZenithX\'26, establishing a competitive campus ecosystem at scale.' },
+  { id: 'cit', label: 'CIT', description: 'Executed structured tournaments & mentored 200+ students on esports career pathways with precision coordination at Trojans\'26.' },
+  { id: 'gojans', label: 'Gojans Festive', description: 'Main Jury Member at Gojans Festopia 2026. Evaluated competitive gameplay, ensured fair execution, and delivered industry awareness sessions.' }
 ];
 
 const filters = [...mainFilters, ...subFilters];
@@ -60,7 +62,7 @@ const Achievements = () => {
         if (failedImages.has(item.image)) return false;
         if (activeCategory === 'all') return true;
         if (activeCategory === 'college_events') {
-            return ['hindustan', 'gojans', 'cit'].includes(item.id);
+            return ['hindustan', 'gojans', 'cit', 'srm'].includes(item.id);
         }
         return item.id === activeCategory;
     });
@@ -151,7 +153,7 @@ const Achievements = () => {
               <div className="buttons-container" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div className="checkboxes">
                   {mainFilters.map((filter) => {
-                      const isCollegeActive = filter.id === 'college_events' && ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory);
+                      const isCollegeActive = filter.id === 'college_events' && ['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory);
                       return (
                       <button 
                           key={filter.id}
@@ -164,7 +166,7 @@ const Achievements = () => {
                   </div>
                   
                   {/* Collapsible Sub-filters for College Events */}
-                  <div className={`checkboxes sub-filters-row ${['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'show' : 'hide'}`} style={{ transition: 'opacity 0.4s ease, margin-top 0.4s ease', marginTop: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? '-20px' : '-40px', opacity: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 1 : 0, pointerEvents: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'auto' : 'none', position: ['college_events', 'hindustan', 'gojans', 'cit'].includes(activeCategory) ? 'relative' : 'absolute', padding: '0', display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <div className={`checkboxes sub-filters-row ${['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory) ? 'show' : 'hide'}`} style={{ transition: 'opacity 0.4s ease, margin-top 0.4s ease', marginTop: ['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory) ? '-20px' : '-40px', opacity: ['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory) ? 1 : 0, pointerEvents: ['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory) ? 'auto' : 'none', position: ['college_events', 'hindustan', 'gojans', 'cit', 'srm'].includes(activeCategory) ? 'relative' : 'absolute', padding: '0', display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
                   {subFilters.map((filter) => (
                       <button 
                           key={filter.id}
