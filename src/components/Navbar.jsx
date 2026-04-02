@@ -35,6 +35,7 @@ const Navbar = ({ scrollProgress }) => {
     { name: 'Expertise', id: 'skills' },
     { name: 'Experience', id: 'experience' },
     { name: 'Achievements', id: 'achievements' },
+    { name: 'Wall Of Fame', id: 'wall-of-fame' },
     { name: 'Contact', id: 'contact' }
   ]
 

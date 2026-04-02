@@ -6,6 +6,7 @@ import Skills from './components/Skills'
 import ScrollingText from './components/ScrollingText'
 import Experience from './components/Experience'
 import Achievements from './components/Achievements'
+import WallOfFame from './components/WallOfFame'
 import Contact from './components/Contact'
 import AnimatedBg from './components/AnimatedBg'
 import ScrollOverlay from './components/ScrollOverlay'
@@ -41,6 +42,7 @@ function App() {
         <ScrollingText />
         <Experience />
         <Achievements />
+        <WallOfFame />
         <Contact />
       </main>
       <footer className="footer">

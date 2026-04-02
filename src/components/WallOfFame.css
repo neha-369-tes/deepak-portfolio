@@ -1,0 +1,202 @@
+
+.wall-of-fame-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 100px 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.fame-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.fame-header h2 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.fame-header h2 span {
+    color: #ff295e;
+}
+
+.fame-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+    letter-spacing: 1px;
+}
+
+.fame-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    z-index: 2;
+}
+
+.fame-item {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 2px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.fame-item:hover {
+    transform: translateY(-10px);
+}
+
+.fame-item .card-inner {
+    background: rgba(10, 5, 5, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 40px 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.fame-item h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    color: #ff295e;
+    position: relative;
+    z-index: 2;
+}
+
+.fame-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.fame-list li {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.fame-list li strong {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.fame-list li span {
+    opacity: 0.7;
+    font-size: 0.95rem;
+}
+
+.highlight-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-box h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+    text-shadow: 0 0 15px rgba(255, 41, 94, 0.6);
+}
+
+.stat-box p {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+.highlight-footer {
+    margin-top: auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    font-style: italic;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.highlight-footer strong {
+    color: #ff295e;
+    font-style: normal;
+}
+
+/* Theming Handling */
+body:not(.dark-mode) .fame-item .card-inner {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body:not(.dark-mode) .stat-box h4 {
+    color: #111;
+    text-shadow: none;
+}
+
+body:not(.dark-mode) .fame-list li {
+    color: #333;
+}
+
+body:not(.dark-mode) .fame-subtitle {
+    color: #555;
+}
+
+body:not(.dark-mode) .highlight-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: #444;
+}
+
+/* Card Glow Effect for subtle styling */
+.card-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 41, 94, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    top: -50px;
+    right: -50px;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .fame-container {
+        grid-template-columns: 1fr;
+    }
+}
