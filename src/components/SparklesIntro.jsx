@@ -1,7 +1,6 @@
-﻿"use client";
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import RippleGrid from "./RippleGrid";
 import './SparklesIntro.css';
 
 const GREETINGS = [
@@ -24,77 +23,122 @@ const GREETINGS = [
 
 export function SparklesIntro() {
   const [index, setIndex] = useState(0);
-  const [gridSize, setGridSize] = useState(28);
-  const [vignette, setVignette] = useState(2);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      // Decreased gridSize to make boxes seem fewer and larger on mobile
-      setGridSize(isMobile ? 15 : 20);
-      setVignette(isMobile ? 0 : 2);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationId;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % GREETINGS.length);
-    }, 2000);
-    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Minimalistic floating particles for SparklesIntro
+    const particles = [];
+    const particleCount = 8;
+
+    class MinimalParticle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 60 + 40;
+        this.speedX = (Math.random() - 0.5) * 0.2;
+        this.speedY = (Math.random() - 0.5) * 0.2;
+        this.opacity = Math.random() * 0.06 + 0.02;
+        this.floatPhase = Math.random() * Math.PI * 2;
+      }
+
+      update(time) {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width + this.size) this.x = -this.size;
+        if (this.x < -this.size) this.x = canvas.width + this.size;
+        if (this.y > canvas.height + this.size) this.y = -this.size;
+        if (this.y < -this.size) this.y = canvas.height + this.size;
+
+        this.opacity = Math.sin(time * 0.002 + this.floatPhase) * 0.05 + 0.03;
+      }
+
+      draw() {
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+        gradient.addColorStop(0, `rgba(220, 20, 60, ${this.opacity * 0.5})`);
+        gradient.addColorStop(1, `rgba(220, 20, 60, ${this.opacity * 0.05})`);
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new MinimalParticle());
+    }
+
+    let startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#ffffff');
+      gradient.addColorStop(0.5, '#fafafa');
+      gradient.addColorStop(1, '#ffffff');
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        particle.update(elapsed);
+        particle.draw();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
     return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resizeCanvas);
     };
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % GREETINGS.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="sparkles-intro-container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', height: '100vh', width: '100vw' }}>
-      
-      {/* The RippleGrid acting as the full-screen background */}
-      <div style={{ 
-          width: '100%', 
-          height: '100%', 
-          position: 'absolute', 
-          top: 0, 
-          left: 0,
-          maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
-        }} 
-        className="light-theme-bg"
-      >
-        <RippleGrid
-          enableRainbow={false}
-          gridColor="#ff2929"
-          rippleIntensity={0.015}
-          gridSize={gridSize}
-          gridThickness={15.0}
-          fadeDistance={1.5}
-          vignetteStrength={vignette}
-          glowIntensity={0.65}
-          opacity={0.75}
-          gridRotation={0}
-          mouseInteraction={true}
-          mouseInteractionRadius={0.4}
-        />
-      </div>
+    <div className="sparkles-intro-container">
+      <canvas ref={canvasRef} className="sparkles-bg-canvas"></canvas>
 
       {/* The "Hi there" Greetings overlaid in the center */}
-      <div className="sparkles-greeting-wrapper" style={{ zIndex: 1, position: 'absolute', pointerEvents: 'none' }}>
+      <div className="sparkles-greeting-wrapper">
         <AnimatePresence mode="wait">
-            <motion.h1
-              key={index}
-              initial={index === 0 ? { opacity: 0, scale: 1.8, filter: "blur(10px)" } : { opacity: 0, y: 20 }}
-              animate={index === 0 ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="sparkles-greeting-text"
-              style={{ margin: 0 }}
-            >
-              {GREETINGS[index]}
-            </motion.h1>
-         </AnimatePresence>
+          <motion.h1
+            key={index}
+            initial={index === 0 ? { opacity: 0, scale: 1.8, filter: "blur(10px)" } : { opacity: 0, y: 20 }}
+            animate={index === 0 ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="sparkles-greeting-text"
+            style={{ margin: 0 }}
+          >
+            {GREETINGS[index]}
+          </motion.h1>
+        </AnimatePresence>
       </div>
-
     </div>
   );
 }

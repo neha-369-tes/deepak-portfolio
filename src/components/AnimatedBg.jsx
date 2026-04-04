@@ -19,39 +19,52 @@ const AnimatedBg = () => {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
-    // Particle system
+    // Floating orb particles system - minimalistic
     const particles = []
-    const particleCount = 50
+    const particleCount = 12 // Reduced for cleaner look
 
-    class Particle {
+    class FloatingParticle {
       constructor() {
         this.x = Math.random() * canvas.width
         this.y = Math.random() * canvas.height
-        this.size = Math.random() * 2 + 1
-        this.speedX = (Math.random() - 0.5) * 1
-        this.speedY = (Math.random() - 0.5) * 1
-        this.opacity = Math.random() * 0.5 + 0.2
+        this.size = Math.random() * 40 + 20 // Larger, more subtle particles
+        this.speedX = (Math.random() - 0.5) * 0.3 // Very slow, gentle movement
+        this.speedY = (Math.random() - 0.5) * 0.3
+        this.opacity = Math.random() * 0.08 + 0.02 // Very subtle opacity
+        this.targetOpacity = Math.random() * 0.1 + 0.02
+        this.floatAmplitude = Math.random() * 0.5 + 0.3
+        this.floatFrequency = Math.random() * 0.005 + 0.002
+        this.floatPhase = Math.random() * Math.PI * 2
       }
 
-      update() {
+      update(time) {
         this.x += this.speedX
         this.y += this.speedY
 
-        if (this.x > canvas.width) this.x = 0
-        if (this.x < 0) this.x = canvas.width
-        if (this.y > canvas.height) this.y = 0
-        if (this.y < 0) this.y = canvas.height
+        // Wrap around screen
+        if (this.x > canvas.width + this.size) this.x = -this.size
+        if (this.x < -this.size) this.x = canvas.width + this.size
+        if (this.y > canvas.height + this.size) this.y = -this.size
+        if (this.y < -this.size) this.y = canvas.height + this.size
 
-        this.opacity += (Math.random() - 0.5) * 0.02
-        this.opacity = Math.max(0.1, Math.min(0.6, this.opacity))
+        // Smooth opacity breathing
+        this.targetOpacity = Math.sin(time * this.floatFrequency + this.floatPhase) * 0.06 + 0.04
+        this.opacity += (this.targetOpacity - this.opacity) * 0.02
       }
 
       draw(isDarkMode) {
-        // Red particles normally, white particles in dark mode for contrast if preferred
-        // Or keep red particles and adjust opacity. Let's keep them Red/White dynamic
-        ctx.fillStyle = isDarkMode 
-          ? `rgba(255, 255, 255, ${this.opacity * 0.8})` 
-          : `rgba(255, 0, 0, ${this.opacity})`;
+        // Soft glowing orbs
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size)
+        
+        if (isDarkMode) {
+          gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity * 0.6})`)
+          gradient.addColorStop(1, `rgba(255, 255, 255, ${this.opacity * 0.1})`)
+        } else {
+          gradient.addColorStop(0, `rgba(220, 20, 60, ${this.opacity * 0.4})`)
+          gradient.addColorStop(1, `rgba(220, 20, 60, ${this.opacity * 0.05})`)
+        }
+        
+        ctx.fillStyle = gradient
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
         ctx.fill()
@@ -60,49 +73,34 @@ const AnimatedBg = () => {
 
     // Initialize particles
     for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle())
+      particles.push(new FloatingParticle())
     }
+
+    let startTime = Date.now()
 
     // Animation loop
     const animate = () => {
-      const isDarkMode = document.body.classList.contains('dark-mode');
-      
-      // Dynamic gradient background based on theme
+      const isDarkMode = document.body.classList.contains('dark-mode')
+      const elapsed = Date.now() - startTime
+
+      // Clean, subtle gradient background
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
       if (isDarkMode) {
-        gradient.addColorStop(0, '#0a0505')
-        gradient.addColorStop(0.5, '#120505')
-        gradient.addColorStop(1, '#0a0505')
+        gradient.addColorStop(0, '#0f0f0f')
+        gradient.addColorStop(0.5, '#1a1a1a')
+        gradient.addColorStop(1, '#0f0f0f')
       } else {
         gradient.addColorStop(0, '#ffffff')
-        gradient.addColorStop(0.5, '#fff5f5')
+        gradient.addColorStop(0.5, '#fafafa')
         gradient.addColorStop(1, '#ffffff')
       }
 
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      const gridSize = 50;
-      // Dynamic grid pattern based on theme
-      ctx.strokeStyle = isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 0, 0, 0.03)'
-
-      for (let i = 0; i < canvas.width; i += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(i, 0)
-        ctx.lineTo(i, canvas.height)
-        ctx.stroke()
-      }
-
-      for (let i = 0; i < canvas.height; i += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(0, i)
-        ctx.lineTo(canvas.width, i)
-        ctx.stroke()
-      }
-
       // Update and draw particles
       particles.forEach(particle => {
-        particle.update()
+        particle.update(elapsed)
         particle.draw(isDarkMode)
       })
 
