@@ -55,12 +55,12 @@ const Skills = () => {
 
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-          <h2 style={{ color: '#fff', fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 500, margin: 0, letterSpacing: '-2px', display: 'inline-flex', alignItems: 'flex-start' }}>
-            Skill {'{'}set{'}'} <sup style={{ fontSize: 'clamp(1rem, 2.5vw, 2rem)', fontWeight: 400, marginLeft: '10px', marginTop: '10px' }}>(3)</sup>
+          <h2 className="skills-main-title" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 500, margin: 0, letterSpacing: '-2px', display: 'inline-flex', alignItems: 'flex-start' }}>
+            <span className="skill-text">SKILL</span> <span className="set-text" style={{ marginLeft: '15px' }}>{'{'}SET{'}'}</span> <sup className="set-text" style={{ fontSize: 'clamp(1rem, 2.5vw, 2rem)', fontWeight: 400, marginLeft: '10px', marginTop: '10px' }}>(3)</sup>
           </h2>
           <p style={{ color: '#aaa', fontSize: 'clamp(1rem, 2vw, 1.8rem)', marginTop: '-5px', fontWeight: 300 }}>& interests</p>
         </div>
-        
+
         {/* Responsive layout wrapper for the groups */}
         <div className="skills-groups-container">
           
