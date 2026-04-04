@@ -1,0 +1,313 @@
+/* Card container and glassmorphism styling */
+.resume-card-wrapper {
+  perspective: 1000px;
+  display: inline-block;
+  padding: 20px;
+}
+
+.resume-card {
+  position: relative;
+  width: 16rem;
+  height: 24rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  transition: transform 0.5s ease-out, box-shadow 0.5s ease, border-color 0.5s ease;
+  transform-style: preserve-3d;
+  
+  /* Initial 3D tilt */
+  transform: rotate3d(1, -1, 1, 30deg);
+  
+  /* Frosted glow effect */
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.resume-card:hover {
+  transform: rotate3d(0, 0, 0, 0deg);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 20px 5px rgba(56, 189, 248, 0.3), inset 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+/* Free-form photo positioned in front */
+.free-form-photo {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -3rem;
+  width: 14.5rem;
+  height: auto;
+  z-index: 2;
+  transition: transform 0.5s ease-out;
+  pointer-events: none; /* Allows clicks to pass through if it overlaps the button */
+  filter: drop-shadow(-5px 5px 10px rgba(0,0,0,0.5));
+}
+
+.resume-card:hover .free-form-photo {
+  transform: scale(1.15) translate(-10px, -10px);
+}
+
+.resume-text {
+  color: #f9fafb;
+  z-index: 10;
+}
+
+.resume-title {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.1;
+  display: block;
+}
+
+.resume-subtitle {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-top: 5px;
+}
+
+.container {
+  padding: 0;
+  margin: 0;
+  margin-top: auto; /* push to bottom */
+  margin-bottom: 1rem; /* push up sightly so it doesn't block the face completely */
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+}
+
+.bg-svg {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -5rem;
+  width: 12rem;
+  height: 12rem;
+  z-index: 1;
+  margin-top: -0.5rem;
+  margin-bottom: -0.5rem;
+  fill: rgba(255, 255, 255, 0.1);
+  transition: transform 0.5s ease-out;
+}
+
+.svg-1 {
+  stroke: rgba(14, 165, 233, 0.4);
+}
+
+.svg-2 {
+  stroke: rgba(56, 189, 248, 0.6);
+}
+
+.resume-card:hover .bg-svg {
+  transform: scale(1.25);
+}
+
+/* User's provided CSS for the download button */
+.label {
+  background-color: transparent;
+  border: 2px solid rgb(91, 91, 240);
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  width: 160px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  padding: 5px;
+  position: relative;
+}
+
+.label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  width: 8px;
+  height: 8px;
+  transition: all 0.4s ease;
+  border-radius: 100%;
+  margin: auto;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.label .input {
+  display: none;
+}
+
+.label .btn-title {
+  font-size: 17px;
+  color: #fff;
+  transition: all 0.4s ease;
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  text-align: center;
+  margin: 0;
+}
+
+.label .btn-title:last-child {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.label .circle {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background-color: rgb(91, 91, 240);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  position: relative;
+  box-shadow: 0 0 0 0 rgb(255, 255, 255);
+  overflow: hidden;
+}
+
+.label .circle .icon {
+  color: #fff;
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+}
+
+.label .circle .square {
+  aspect-ratio: 1;
+  width: 15px;
+  border-radius: 2px;
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+}
+
+.label .circle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #3333a8;
+  width: 100%;
+  height: 0;
+  transition: all 0.4s ease;
+}
+
+.label:has(.input:checked) {
+  width: 57px;
+  animation: installed 0.4s ease 3.5s forwards;
+}
+
+.label:has(.input:checked)::before {
+  animation: rotate 3s ease-in-out 0.4s forwards;
+}
+
+.label .input:checked + .circle {
+  animation:
+    pulse 1s forwards,
+    circleDelete 0.2s ease 3.5s forwards;
+  rotate: 180deg;
+}
+
+.label .input:checked + .circle::before {
+  animation: installing 3s ease-in-out forwards;
+}
+
+.label .input:checked + .circle .icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.label .input:checked ~ .circle .square {
+  opacity: 1;
+  visibility: visible;
+}
+
+.label .input:checked ~ .btn-title {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.label .input:checked ~ .btn-title:last-child {
+  animation: showInstalledMessage 0.4s ease 3.5s forwards;
+}
+
+@keyframes pulse {
+  0% {
+    scale: 0.95;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    scale: 1;
+    box-shadow: 0 0 0 16px rgba(255, 255, 255, 0);
+  }
+  100% {
+    scale: 0.95;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes installing {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-90deg) translate(27px) rotate(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  99% {
+    transform: rotate(270deg) translate(27px) rotate(270deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes installed {
+  100% {
+    width: 150px;
+    border-color: rgb(35, 174, 35);
+  }
+}
+
+@keyframes circleDelete {
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes showInstalledMessage {
+  100% {
+    opacity: 1;
+    visibility: visible;
+    right: 56px;
+  }
+}

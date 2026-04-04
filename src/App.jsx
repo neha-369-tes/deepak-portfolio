@@ -1,4 +1,5 @@
 import { useState, useEffect, Suspense, lazy } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ScrollingText from './components/ScrollingText'
@@ -8,6 +9,7 @@ import AnimatedBg from './components/AnimatedBg'
 import ScrollOverlay from './components/ScrollOverlay'
 import ScrollFloat from './components/ScrollFloat' // Import the ScrollFloat component
 import { SparklesIntro } from './components/SparklesIntro' // Import the new Sparkles Intro
+import NotFound from './components/NotFound'
 import './App.css'
 
 const About = lazy(() => import('./components/About'))
@@ -16,7 +18,7 @@ const Experience = lazy(() => import('./components/Experience'))
 const Achievements = lazy(() => import('./components/Achievements'))
 const Contact = lazy(() => import('./components/Contact'))
 
-function App() {
+function MainContent() {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
@@ -60,6 +62,17 @@ function App() {
         </div>
       </footer>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainContent />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

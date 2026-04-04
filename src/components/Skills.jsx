@@ -1,145 +1,225 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import MagneticBg from './MagneticBg';
-import './Skills.css';
+import BubbleMenu from './BubbleMenu';
+import ResumeCard from './ResumeCard';
 
-const skillData = {
-  technical: [
-    { category: 'Tech', name: 'Web Development', desc: 'Building responsive, performant web apps from scratch using modern stacks.' },
-    { category: 'Tech', name: 'AI Automation', desc: 'Designing intelligent workflows, bots, and automation pipelines with AI tools.' },
-    { category: 'Tech', name: 'Chatbot Development', desc: 'Building conversational AI systems for support, engagement, and automation.' },
-    { category: 'Tech', name: 'System Design', desc: 'Architecting scalable, reliable systems and API integrations end-to-end.' },
-    { category: 'Tech', name: 'Node.js', desc: 'Server-side JavaScript for APIs, real-time apps, and backend services.' },
-    { category: 'Tech', name: 'Python', desc: 'Scripting, automation, data processing, and AI/ML integrations.' },
-    { category: 'Tech', name: 'IAM & Security', desc: 'Identity & access management, authentication flows, and secure systems.' },
-    { category: 'Tech', name: 'JavaScript', desc: 'Modern ES6+ development, DOM manipulation, and interactive web interfaces.' }
-  ],
-  esports: [
-    { category: 'Esport', name: 'Tournament Management', desc: 'End-to-end planning, bracket design, and execution of national-level tournaments.' },
-    { category: 'Esport', name: 'Event Leadership', desc: 'Leading teams, managing logistics, and delivering seamless live esports events.' },
-    { category: 'Esport', name: 'Production & Broadcasting', desc: 'Live stream production, commentary coordination, and broadcast management.' },
-    { category: 'Esport', name: 'Team Management', desc: 'Building, coaching, and coordinating competitive esports rosters and operations.' },
-    { category: 'Esport', name: 'Game Analysis & Strategy', desc: 'Breaking down gameplay meta, coaching players, and building competitive strategies.' },
-    { category: 'Esport', name: 'College Activations', desc: 'Driving student engagement across campuses through structured esports programs.' },
-    { category: 'Esport', name: 'Operations & Logistics', desc: 'Managing end-to-end event operations, vendor coordination, and player management.' }
-  ],
-  soft: [
-    { category: 'Soft', name: 'Public Speaking', desc: 'Guest speaker at colleges, summits, and industry events across Tamil Nadu.' },
-    { category: 'Soft', name: 'UI/UX Thinking', desc: 'Designing intuitive user experiences with a sharp eye for visual detail.' },
-    { category: 'Soft', name: 'Brand-Oriented Design', desc: 'Creating cohesive visual identities and digital content that builds brand equity.' },
-    { category: 'Soft', name: 'Project Planning', desc: 'Structuring timelines, resources, and deliverables for complex multi-team projects.' },
-    { category: 'Soft', name: 'Collaboration', desc: 'Cross-functional teamwork across orgs, colleges, and industry partners.' },
-    { category: 'Soft', name: 'Strategic Thinking', desc: 'Translating vision into actionable plans — from zero to execution at scale.' },
-    { category: 'Soft', name: 'Visual Content Creation', desc: 'Producing compelling digital content that tells stories and drives engagement.' }
-  ]
-};
+const techItems = [
+  { label: 'Technical Expertise', rotation: 0, hoverStyles: { bgColor: '#fff', textColor: '#000' } },
+  { label: 'Web & App Dev', rotation: -5, hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' } },
+  { label: 'System Design & Integration', rotation: 4, hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' } },
+  { label: 'Chatbot & AI Automations', rotation: -3, hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' } },
+  { label: 'C++, Java, JS, Node.js', rotation: 6, hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' } },
+  { label: 'DBMS', rotation: -4, hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' } },
+  { label: 'Agile Software Dev', rotation: 5, hoverStyles: { bgColor: '#ec4899', textColor: '#ffffff' } },
+  { label: 'IAM & API Integrations', rotation: -6, hoverStyles: { bgColor: '#0ea5e9', textColor: '#ffffff' } },
+  { label: 'UI/UX Thinking', rotation: 7, hoverStyles: { bgColor: '#f97316', textColor: '#ffffff' } },
+  { label: 'Graphic & Visual Design', rotation: -5, hoverStyles: { bgColor: '#14b8a6', textColor: '#ffffff' } },
+  { label: 'Brand-Oriented Design', rotation: 4, hoverStyles: { bgColor: '#6366f1', textColor: '#ffffff' } }
+];
 
-const SkillCard = ({ item }) => {
-  let catClass = 'cat-tech';
-  if (item.category === 'Esport') catClass = 'cat-esp';
-  if (item.category === 'Soft') catClass = 'cat-soft';
-  
-  return (
-    <div className="sk" style={{ userSelect: 'none' }}>
-      <span className={`sk-cat ${catClass}`}>{item.category}</span>
-      <div className="sk-name">{item.name}</div>
-      <div className="sk-desc">{item.desc}</div>
-    </div>
-  );
-};
+const esportsItems = [
+  { label: 'Esports Domain', rotation: 0, hoverStyles: { bgColor: '#fff', textColor: '#000' } },
+  { label: 'Tournament Management', rotation: -8, hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' } },
+  { label: 'Event Leadership', rotation: 8, hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' } },
+  { label: 'Production & Broadcasting', rotation: -5, hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' } },
+  { label: 'Team Management', rotation: 6, hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' } },
+  { label: 'Game Analysis & Strategy', rotation: -6, hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' } }
+];
 
-const MarqueeRow = ({ title, items }) => {
-  const scrollRef = useRef(null);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const autoScrollIntervalRef = useRef(null);
-  const pauseTimeoutRef = useRef(null);
-
-  useEffect(() => {
-    const startAutoScroll = () => {
-      if (!scrollRef.current) return;
-
-      autoScrollIntervalRef.current = setInterval(() => {
-        if (scrollRef.current && isAutoScrolling) {
-          scrollRef.current.scrollLeft += 1;
-        }
-      }, 30);
-    };
-
-    startAutoScroll();
-
-    return () => {
-      if (autoScrollIntervalRef.current) {
-        clearInterval(autoScrollIntervalRef.current);
-      }
-      if (pauseTimeoutRef.current) {
-        clearTimeout(pauseTimeoutRef.current);
-      }
-    };
-  }, [isAutoScrolling]);
-
-  const handleUserInteraction = () => {
-    setIsAutoScrolling(false);
-
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-
-    pauseTimeoutRef.current = setTimeout(() => {
-      setIsAutoScrolling(true);
-    }, 3000);
-  };
-
-  const handleMouseDown = () => {
-    handleUserInteraction();
-  };
-
-  const handleTouchStart = () => {
-    handleUserInteraction();
-  };
-
-  const handleScroll = () => {
-    handleUserInteraction();
-  };
-
-  return (
-    <div className="skill-row-container">
-      <div className="row-label">{title}</div>
-      <div
-        className="marquee-wrapper"
-        ref={scrollRef}
-        style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-        onScroll={handleScroll}
-      >
-        <div className="marquee-content">
-          {[...items, ...items].map((item, index) => (
-            <SkillCard key={`skills-${index}`} item={item} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+const softItems = [
+  { label: 'Public Presence & Leadership', rotation: 0, hoverStyles: { bgColor: '#fff', textColor: '#000' } },
+  { label: 'Esports Awareness Sessions', rotation: -5, hoverStyles: { bgColor: '#ec4899', textColor: '#ffffff' } },
+  { label: 'Student Communities', rotation: 4, hoverStyles: { bgColor: '#14b8a6', textColor: '#ffffff' } },
+  { label: 'Academic Representation', rotation: -6, hoverStyles: { bgColor: '#f97316', textColor: '#ffffff' } },
+  { label: 'Ecosystem Growth', rotation: 5, hoverStyles: { bgColor: '#0ea5e9', textColor: '#ffffff' } },
+  { label: 'Communication & Speaking', rotation: -4, hoverStyles: { bgColor: '#6366f1', textColor: '#ffffff' } },
+  { label: 'Team Management & Leadership', rotation: 6, hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' } },
+  { label: 'Project Planning & Execution', rotation: -5, hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' } },
+  { label: 'Collaboration & Coordination', rotation: 7, hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' } }
+];
 
 const Skills = () => {
   return (
-    <section id="skills" className="ex">
-      {/* Marker: Zag Left, Vertically Centered */}
+    <section id="skills" style={{ 
+      position: 'relative', 
+      overflow: 'hidden', 
+      minHeight: '120vh', 
+      padding: '120px 0',
+      background: 'transparent',
+      borderTop: '1px solid rgba(255, 255, 255, 0.05)'
+    }}>
       <div id="marker-skills" className="scroll-marker" style={{ top: '50%', right: '10%' }}></div>
-      {/* Magnetic Background */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: 0.5, zIndex: 0 }}>
         <MagneticBg />
       </div>
 
-      <div className="container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
-        <div className="ex-head">
-          <h2 className="ex-title">Expert<span>.</span>ise</h2>
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <h2 style={{ color: '#fff', fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 500, margin: 0, letterSpacing: '-2px', display: 'inline-flex', alignItems: 'flex-start' }}>
+            Skill {'{'}set{'}'} <sup style={{ fontSize: 'clamp(1rem, 2.5vw, 2rem)', fontWeight: 400, marginLeft: '10px', marginTop: '10px' }}>(3)</sup>
+          </h2>
+          <p style={{ color: '#aaa', fontSize: 'clamp(1rem, 2vw, 1.8rem)', marginTop: '-5px', fontWeight: 300 }}>& interests</p>
         </div>
+        
+        {/* Responsive layout wrapper for the groups */}
+        <div className="skills-groups-container">
+          
+          {/* Top Row: Tech (Left) & Esports (Right) */}
+          <div className="top-row-groups">
+            {/* 1. Tech Group */}
+            <div className="skill-group-container tech-group">
+              <BubbleMenu
+                items={techItems}
+                menuBg="#111"
+                menuContentColor="#fff"
+                animationEase="back.out(1.5)"
+                animationDuration={0.6}
+                staggerDelay={0.06}
+              />
+            </div>
 
-        <MarqueeRow title="Technical Skills" items={skillData.technical} speed={1} />
-        <MarqueeRow title="Esports Expertise" items={skillData.esports} speed={1} />
-        <MarqueeRow title="Other Competencies" items={skillData.soft} speed={1} />
+            {/* 2. Esports Group (Right Space of Tech) */}
+            <div className="skill-group-container esports-group">
+              <BubbleMenu
+                items={esportsItems}
+                menuBg="#111"
+                menuContentColor="#fff"
+                animationEase="back.out(1.5)"
+                animationDuration={0.6}
+                staggerDelay={0.06}
+              />
+            </div>
+          </div>
+
+          {/* Bottom Row: Soft Skills Group & Resume */}
+          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '60px', alignItems: 'center' }}>
+            <div className="skill-group-container soft-group">
+              <BubbleMenu
+                items={softItems}
+                menuBg="#111"
+                menuContentColor="#fff"
+                animationEase="back.out(1.5)"
+                animationDuration={0.6}
+                staggerDelay={0.06}
+              />
+            </div>
+
+            <ResumeCard />
+          </div>
+
+        </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .skills-groups-container {
+          position: relative;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 70px;
+          padding: 0 40px;
+        }
+
+        .top-row-groups {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          width: 100%;
+          gap: 40px;
+        }
+
+        .skill-group-container {
+          width: 100%;
+          max-width: 800px;
+          display: flex;
+        }
+
+        .tech-group {
+          flex: 1.1;
+          justify-content: center;
+        }
+        
+        .esports-group {
+          flex: 0.9;
+          display: flex;
+          justify-content: center;
+        }
+
+        .soft-group {
+          align-self: center;
+          margin-top: 40px;
+          justify-content: center;
+        }
+
+        /* Group Heading Bubble */
+        .bubble-menu-items .pill-list .pill-col:first-child .pill-link {
+          background: rgba(255, 255, 255, 0.9) !important;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          color: #000000 !important;
+          border: 1px solid rgba(255, 255, 255, 1);
+          z-index: 5;
+          font-weight: 700;
+          font-size: clamp(1.1rem, 2vw, 1.6rem);
+          padding: 1rem 1.8rem;
+          transform: rotate(0deg) !important;
+          margin-bottom: 2px;
+          box-shadow: 0 4px 20px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.2) !important;
+        }
+        
+        /* Light Mode Headers */
+        body:not(.dark-mode) .bubble-menu-items .pill-list .pill-col:first-child .pill-link {
+          background: rgba(0, 0, 0, 0.85) !important;
+          color: #fff !important;
+          border: 1px solid #000;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Light Mode Texts */
+        body:not(.dark-mode) h2, body:not(.dark-mode) h2 sup, body:not(.dark-mode) p {
+          color: #111 !important;
+        }
+
+        .bubble-menu-items .pill-list .pill-col:first-child .pill-link:hover {
+          transform: scale(1.05) !important;
+        }
+
+        /* Rest of the Bubbles Alignment */
+        .bubble-menu-items .pill-list {
+          justify-content: center;
+        }
+
+        .soft-group .pill-list {
+          justify-content: center;
+        }
+
+        .esports-group .pill-list {
+          justify-content: center;
+        }
+
+        @media (max-width: 1000px) {
+          .top-row-groups {
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+          }
+          .skill-group-container {
+            align-self: center !important;
+            max-width: 100%;
+          }
+          .esports-group {
+            justify-content: center;
+          }
+          .skills-groups-container {
+            flex-direction: column;
+            gap: 40px;
+            padding: 0 20px;
+          }
+          .bubble-menu-items .pill-list {
+            justify-content: center !important;
+          }
+        }
+      `}} />
     </section>
   );
 };

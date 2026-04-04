@@ -1,17 +1,24 @@
 ﻿.marquee-wrapper {
-  display: flex;
+  display: block;
+  width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 20px;
   scrollbar-width: none;
   cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x;
 }
+
 .marquee-wrapper::-webkit-scrollbar {
   display: none;
 }
+
 .marquee-content {
   display: flex;
   gap: 1.5rem;
   padding: 10px 20px;
+  width: max-content;
 }
-.marquee-wrapper { scroll-behavior: auto !important; }
