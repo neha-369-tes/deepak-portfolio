@@ -110,7 +110,7 @@ const Certifications = () => {
     <div className="certifications-section">
       <h3 className="certifications-subtitle"><span className="th-text">Certifications</span><span className="th-dot">.</span></h3>
       
-      <div 
+      <div
         className="certifications-track-container"
         ref={trackRef}
         onMouseDown={onMouseDown}
@@ -118,11 +118,12 @@ const Certifications = () => {
         onMouseLeave={onMouseLeave}
         onMouseEnter={onMouseEnter}
         onMouseMove={onMouseMove}
-        onTouchStart={onMouseDown}
-        onTouchEnd={onMouseUp}
-        onTouchMove={onMouseMove}
-        style={{ 
-          overflowX: 'auto', 
+        onTouchStart={() => { isHovered.current = true; dragThreshold.current = false; }}
+        onTouchEnd={() => { isHovered.current = false; if(trackRef.current) position.current = trackRef.current.scrollLeft; }}
+        onTouchMove={() => { dragThreshold.current = true; }}
+        onScroll={(e) => { if (isHovered.current || isDragging.current) position.current = e.currentTarget.scrollLeft; }}
+        style={{
+          overflowX: 'auto',
           cursor: 'grab', 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none'
