@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ScrollingText from './components/ScrollingText'
@@ -17,20 +16,6 @@ import Experience from './components/Experience'
 import Achievements from './components/Achievements'
 import Contact from './components/Contact'
 import './App.css'
-
-const CardReveal = ({ children }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 150, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true, margin: "-10%" }}
-      className="card-reveal-wrapper"
-    >
-      {children}
-    </motion.div>
-  )
-}
 
 function MainContent() {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -57,15 +42,14 @@ function MainContent() {
         <SparklesIntro />
         <Hero />
         <ScrollOverlay />
-        
-        <CardReveal><About /></CardReveal>
-        <CardReveal><Skills /></CardReveal>
-        <CardReveal><ScrollingText /></CardReveal>
-        <CardReveal><Experience /></CardReveal>
-        <CardReveal><Achievements /></CardReveal>
-        <CardReveal><WallOfFame /></CardReveal>
-        <CardReveal><Testimonial /></CardReveal>
-        <CardReveal><Contact /></CardReveal>
+        <About />
+        <Skills />
+        <ScrollingText />
+        <Experience />
+        <Achievements />
+        <WallOfFame />
+        <Testimonial />
+        <Contact />
       </main>
       <footer className="footer">
         <div className="footer-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
