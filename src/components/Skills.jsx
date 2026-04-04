@@ -110,7 +110,15 @@ const Skills = () => {
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{__html: `          .skills-main-title .skill-text {
+            color: #ffffff !important;
+          }
+          body:not(.dark-mode) .skills-main-title .skill-text {
+            color: #111111 !important;
+          }
+          .skills-main-title .set-text {
+            color: #dc143c !important; /* var(--primary-red) */
+          }
         .skills-groups-container {
           position: relative;
           width: 100%;
