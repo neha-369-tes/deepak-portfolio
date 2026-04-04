@@ -64,7 +64,7 @@ body.dark-mode .floating-dock-icon-wrapper {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: -45px;
+  top: calc(100% + 12px);
   padding: 6px 12px;
   white-space: nowrap;
   font-size: 12px;

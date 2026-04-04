@@ -71,9 +71,10 @@ function IconContainer({ mouseX, title, icon, href, onClick }) {
         <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0, y: 10, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: 2, x: "-50%" }}
+              initial={{ opacity: 0, y: -10, x: "-50%", scale: 0.7 }}
+              animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+              exit={{ opacity: 0, y: -5, x: "-50%", scale: 0.7 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="floating-dock-tooltip"
             >
               {title}
