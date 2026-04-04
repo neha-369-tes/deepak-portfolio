@@ -359,21 +359,7 @@
   .hero-image-wrapper {
         min-height: 400px;
         order: -1; /* Image on top for mobile */
-  }
-
-  .cut-container {
-      max-width: 350px;
-  }
-}
-
-/* Responsive */
-@media (max-width: 968px) {
-  .hero {
-    padding: 100px 20px 40px;
-    min-height: auto;
-  }
-
-  .hero-grid {
+        justify-content: center;
     grid-template-columns: 1fr;
     gap: 40px;
   }
@@ -389,6 +375,7 @@
   .hero-image-wrapper {
     min-height: 350px;
     order: -1;
+    justify-content: center;
   }
 
   .cta-buttons {

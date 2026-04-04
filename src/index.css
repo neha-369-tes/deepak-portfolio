@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -46,8 +51,14 @@ body {
   overflow-x: clip;
 }
 
+h1, h2, h3, h4, h5, h6, .section-title, .achievements-title, .expertise-tools-title, .experience-title {
+  font-family: 'Tusker Grotesk', 'Tusker-Grotesk', 'TuskerGrotesk', sans-serif !important;
+  letter-spacing: 1px;
+}
+
 /* Mobile Global Adjustments */
-@media (max-width: 768px) { h1.main-heading, .section-title { font-size: 32px !important; } }
+@media (max-width: 768px) { h1.main-heading, .section-title { font-size: clamp(1.8rem, 6vw, 2.5rem) !important; text-align: center; } }
+@media (max-width: 480px) { .experience-title { font-size: clamp(1.8rem, 8vw, 2.4rem) !important; word-wrap: break-word; text-align: center; display: block; width: 100%; } }
 
 /* Global — prevents browser from pausing off-screen WebGL */
 canvas {
@@ -71,6 +82,6 @@ body.dark-mode .item:hover {
 body.dark-mode .animated-bg {
   opacity: 0.9;
 }
-body.dark-mode canvas {
-  filter: contrast(1.2) brightness(0.9);
-}
+
+@font-face { font-family: 'Tusker Grotesk'; src: local('Tusker Grotesk'); } h1, h2, h3, h4, h5, h6, .section-title, .achievements-title, .expertise-tools-title, .experience-title, .ex-title, .fame-item h3 { font-family: 'Tusker Grotesk', 'Tusker-Grotesk', 'TuskerGrotesk', sans-serif !important; }
+

@@ -1,8 +1,11 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
 import './HeroBadge.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CHARS = '@#$%&*<>[]{}|/\\~^()!?';
 
@@ -77,7 +80,13 @@ const Hero = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.5 });
+      const tl = gsap.timeline({ 
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 60%", // Play when Hero is at 60% viewport
+          toggleActions: "play none none none"
+        }
+      });
 
       // 1. Initial State
       // Set masks to cover the image completely
@@ -169,10 +178,10 @@ const Hero = () => {
   return (
     <section id="home" className="hero" ref={containerRef}>
       <div id="marker-hero" className="scroll-marker" style={{ top: '50%', right: '10%' }}></div>
-      
+
       <div className="hero-grid">
         <motion.div
-            className="hero-text-content" 
+            className="hero-text-content"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -184,9 +193,9 @@ const Hero = () => {
               <ScrambleText>Kathiravan</ScrambleText>
             </motion.h1>
             <motion.p className="hero-subtitle">
-              Executive Engineer <span className="highlight-company">@ Autobotz Esports</span>
+              Executive Engineer <span className="highlight-company">@ Autobotz Esports</span>  
             </motion.p>
-            <motion.div 
+            <motion.div
                className="company-badge"
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
@@ -200,7 +209,7 @@ const Hero = () => {
                 Building scalable esports ecosystems while driving digital innovation through technology, strategy, and execution. Bridging the gap between competitive gaming and corporate excellence.
             </motion.p>
             </motion.div>
-            
+
             <motion.div
                 className="cta-buttons"
                 initial={{ opacity: 0, y: 20 }}
@@ -230,11 +239,11 @@ const Hero = () => {
                     <img src="/logos/Abz%20Logo%20Red-1.png" alt="Autobotz Logo Background" className="hero-bg-logo" />
                     <img src="/prof-pics/1.png" alt="Deepak Kathiravan" className="profile-img-natural" />
                 </div>
-                
+
                 {/* The "Paper" Masks that get cut */}
                 <div className="cut-mask mask-top" ref={maskTopRef}></div>
                 <div className="cut-mask mask-bottom" ref={maskBottomRef}></div>
-                
+
                 {/* The Slash Line */}
                 <div className="katana-slash-line" ref={slashRef}></div>
             </div>

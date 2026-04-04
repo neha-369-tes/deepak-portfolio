@@ -1,0 +1,247 @@
+/* Certifications section styling */
+.certifications-section {
+  position: relative;
+  z-index: 20;
+  width: 100vw;
+  margin-top: 5rem;
+  padding-bottom: 5rem;
+  overflow: hidden;
+  background: transparent;
+}
+
+.certifications-subtitle {
+  font-family: 'Tusker Grotesk', sans-serif !important;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  color: var(--dark-gray);
+  margin-bottom: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Track container */
+.certifications-track-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.certifications-track-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Certifications Layout */
+.certifications-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  padding: 0 20px;
+}
+
+/* Cards */
+.cert-card {
+  width: 250px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.cert-card:hover {
+  transform: scale(1.05);
+}
+
+/* Wrapper for aspect ratio constraints */
+.cert-thumbnail-wrapper {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cert-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PDF Thumbnail styling */
+.pdf-thumbnail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #fff;
+}
+
+.pdf-preview {
+  width: 100%;
+  height: 200%; /* Scale up so we get a better view */
+  border: none;
+  transform: scale(0.5);
+  transform-origin: top left;
+  pointer-events: none; /* Crucial: make IFRAME unclickable */
+}
+
+.pdf-overlay-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Catches all clicks instead of iframe */
+  background: rgba(0,0,0,0.02); /* Slight tint for UX */
+}
+
+/* Small badge */
+.pdf-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: var(--primary-red);
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 4px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Name - Make it highly visible for all themes */
+.cert-name {
+  margin-top: 1rem;
+  text-align: center;
+  font-family: inherit;
+  font-weight: 700;
+  color: #000 !important; /* Force black text */
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  background: #fff !important; /* Solid bright white background */
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: block;
+}
+
+
+/* LIGHTBOX */
+.cert-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85); /* Deep shadow */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999; /* Cover everything */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightbox-content {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  height: 80vh;
+  background: var(--light-gray, #fff);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Lightbox Content Tags */
+.lightbox-img {
+  width: 100%;
+  height: calc(100% - 40px);
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-pdf {
+  width: 100%;
+  height: calc(100% - 40px);
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Close button */
+.close-lightbox {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-red, #ff3333);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.close-lightbox:hover {
+  transform: scale(1.1);
+  background: #cc0000;
+}
+
+.lightbox-title {
+  margin-top: 1rem;
+  font-family: inherit;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .cert-card {
+    width: 200px;
+  }
+  
+  .cert-thumbnail-wrapper {
+    height: 140px;
+  }
+  
+  .lightbox-content {
+    width: 95%;
+    height: 70vh;
+  }
+  
+  .close-lightbox {
+    top: -15px;
+    right: -10px;
+  }
+}
+.certifications-track-container { scroll-behavior: auto !important; }

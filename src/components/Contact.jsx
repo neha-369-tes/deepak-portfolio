@@ -74,13 +74,14 @@ const Contact = () => {
       <div id="marker-contact" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         <motion.h2
-          className="section-title"
+          className="section-title experience-title"
+          style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, color: 'var(--dark-gray)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none', textAlign: 'center', marginBottom: '60px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Contact Through Mail
+          Connect<span>.</span>Me
         </motion.h2>
 
         <motion.div
@@ -96,7 +97,7 @@ const Contact = () => {
             className="contact-form"
             onSubmit={handleSubmit}
           >
-            <h3 style={{ marginBottom: '20px', color: '#333' }}>Send a Message</h3>
+            <h3 className="contact-subtitle" style={{ marginBottom: '20px' }}>Send a Message</h3>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <motion.input

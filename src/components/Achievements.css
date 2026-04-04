@@ -13,6 +13,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -24,8 +26,10 @@
 
 .balatro-bg canvas {
   display: block;
+  position: sticky;
+  top: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .achievements-content {
@@ -35,9 +39,9 @@
 }
 
 .achievements-title {
-    font-size: 5rem;
+    font-size: clamp(2.5rem, 10vw, 5rem);
     font-weight: 700;
-    color: #ffffff;
+    color: var(--black);
     margin: 0;
     line-height: 1.1;
     letter-spacing: -2px;
@@ -284,15 +288,15 @@ label {
 
 .description-panel {
   color: #fff;
-  padding: 1.5rem;
-  /* Dark Matte Glass */
-  background: rgba(30, 30, 30, 0.6);
+  padding: 2rem;
+  /* Dark reddish gradient matching the reference image */
+  background: linear-gradient(135deg, rgba(56, 10, 17, 0.8) 0%, rgba(26, 5, 5, 0.9) 100%);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  
+  border: 1px solid rgba(220, 20, 60, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(220, 20, 60, 0.05);
+
   opacity: 0;
   transform: translateX(-20px);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* "Apple-like" smooth ease */
@@ -304,18 +308,22 @@ label {
 }
 
 .description-panel h3 {
-  font-size: 1.8rem;
-  color: var(--primary-red);
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--primary-red, #dc143c);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
   text-transform: uppercase;
+  font-family: var(--font-tusker, 'Tusker Grotesk', sans-serif) !important;
+  letter-spacing: 0.5px;
 }
 
 .description-panel p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #ddd;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #e0e0e0;
+  font-weight: 400;
 }
-
 .tag-button {
   align-items: center;
   border-radius: 99px;
@@ -443,3 +451,16 @@ label {
   height: 100%;
   object-fit: cover;
 }
+
+@media(max-width: 480px) { 
+  .box-container { grid-template-columns: repeat(2, 1fr); gap: 12px; grid-auto-rows: 150px; min-height: 200px; } 
+  .item { border-radius: 12px; } 
+  .item img { border-radius: 10px; } 
+  .achievements-content { padding: 60px 15px; }
+  .achievements-title { font-size: 2.2rem; letter-spacing: -1px; word-wrap: break-word; }
+}
+
+@media(max-width: 768px) { .box-container { grid-template-columns: repeat(2, 1fr); gap: 12px; grid-auto-rows: 160px; } }
+
+@media (max-width: 768px) { .balatro-bg { -webkit-mask-image: none !important; mask-image: none !important; opacity: 0.85; } .balatro-bg canvas { position: absolute !important; height: 100% !important; min-height: 100vh !important; } }
+

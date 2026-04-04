@@ -31,7 +31,9 @@ const experiences = [
 
 const Experience = () => {
   return (
-    <section id="experience" className="experience-section" style={{ padding: "100px 0", background: "var(--off-white)", position: 'relative', borderTop: "1px solid var(--light-gray)" }}>
+    <section id="experience" className="experience-section" style={{ padding: "100px 0", position: 'relative', borderTop: "1px solid var(--light-gray)", overflow: 'hidden', zIndex: 5 }}>
+      <div className="experience-bg"></div>
+      
       {/* Marker: Zag Right, Vertically Centered */}
       <div id="marker-experience" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
 

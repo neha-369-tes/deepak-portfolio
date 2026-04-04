@@ -8,8 +8,45 @@
     align-items: center;
     justify-content: center;
     background: inherit;
-    overflow: hidden;
+    /* hidden acts better for cross-browser element clipping */
+    overflow: hidden; 
     z-index: 5;
+}
+
+.wall-of-fame-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    clip-path: inset(0 0 0 0); /* This binds the fixed child perfectly to this section's bounds */
+}
+
+.wall-of-fame-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Desktop background */
+    background-image: url('/prof-pics/wall-of-fame-pc.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@media(max-width: 768px) {
+  .wall-of-fame-bg::before {
+    /* Phone background */
+    background-image: url('/prof-pics/wall-of-fame-pic.png');
+    /* Ensure it "fits in page" on phone without aggressive zoom padding bug */
+    background-size: cover; 
+    background-position: center top;
+  }
 }
 
 .fame-header {
@@ -20,15 +57,10 @@
 }
 
 .fame-header h2 {
-    font-size: clamp(3rem, 6vw, 5rem);
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 2px;
     margin-bottom: 10px;
-    text-transform: uppercase;
 }
 
 .fame-header h2 span {
-    color: #ff295e;
 }
 
 .fame-subtitle {
@@ -76,7 +108,7 @@
 }
 
 .fame-item h3 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Tusker Grotesk', sans-serif !important;
     font-size: 2.2rem;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -127,10 +159,11 @@
 }
 
 .stat-box h4 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Tusker Grotesk', sans-serif !important;
     font-size: 3.5rem;
     color: #fff;
     margin-bottom: 5px;
+    letter-spacing: 1px;
     text-shadow: 0 0 15px rgba(255, 41, 94, 0.6);
 }
 

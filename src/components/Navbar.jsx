@@ -1,12 +1,22 @@
-import { motion } from 'framer-motion'
-import './Navbar.css'
-import { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react';
+import { FloatingDock } from './ui/floating-dock';
+import GlassSurface from './GlassSurface';
+import {
+  IconHome,
+  IconUser,
+  IconCode,
+  IconBriefcase,
+  IconAward,
+  IconCertificate,
+  IconMail,
+  IconSun,
+  IconMoon
+} from '@tabler/icons-react';
+import './Navbar.css';
 
 const Navbar = ({ scrollProgress }) => {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Initialize dark mode from localStorage or system preference
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -29,86 +39,42 @@ const Navbar = ({ scrollProgress }) => {
     });
   };
 
-  const navItems = [
-    { name: 'Home', id: 'home' },
-    { name: 'About', id: 'about' },
-    { name: 'Expertise', id: 'skills' },
-    { name: 'Experience', id: 'experience' },
-    { name: 'Achievements', id: 'achievements' },
-    { name: 'Wall Of Fame', id: 'wall-of-fame' },
-    { name: 'Contact', id: 'contact' }
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
+  const links = [
+    { title: 'Home', icon: <IconHome style={{ width: '100%', height: '100%' }} />, href: '#home' },
+    { title: 'About', icon: <IconUser style={{ width: '100%', height: '100%' }} />, href: '#about' },
+    { title: 'Expertise', icon: <IconCode style={{ width: '100%', height: '100%' }} />, href: '#skills' },
+    { title: 'Experience', icon: <IconBriefcase style={{ width: '100%', height: '100%' }} />, href: '#experience' },
+    { title: 'Achievements', icon: <IconAward style={{ width: '100%', height: '100%' }} />, href: '#achievements' },
+    { title: 'Wall Of Fame', icon: <IconCertificate style={{ width: '100%', height: '100%' }} />, href: '#wall-of-fame' },
+    { title: 'Contact', icon: <IconMail style={{ width: '100%', height: '100%' }} />, href: '#contact' },
+    {
+      title: isDarkMode ? 'Light Mode' : 'Dark Mode',
+      icon: isDarkMode ? <IconSun style={{ width: '100%', height: '100%' }} /> : <IconMoon style={{ width: '100%', height: '100%' }} />,
+      onClick: toggleDarkMode,
+      href: '#'
     }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: (i) => ({
-      opacity: 1,
-      x: 0,
-      transition: { delay: i * 0.1, duration: 0.3 }
-    })
-  }
-
-  const toggleMenu = () => setMenuOpen(!menuOpen)
+  ];
 
   return (
-    <motion.nav className="navbar" variants={containerVariants} initial="hidden" animate="visible">
-      <div className="nav-container">
-        <motion.div className="logo" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <h1>Deepak<span>.</span></h1>
-        </motion.div>
+    <div className="navbar-dock-wrapper">
+      <GlassSurface
+        width="auto"
+        height={65}
+        borderRadius={50}
+        displace={0.5}
+        distortionScale={-80}
+        redOffset={10}
+        greenOffset={5}
+        blueOffset={15}
+        brightness={110}
+        opacity={0.8}
+        mixBlendMode="normal"
+        className="custom-glass-nav"
+      >
+        <FloatingDock items={links} />
+      </GlassSurface>
+    </div>
+  );
+};
 
-        <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
-          {navItems.map((item, i) => (
-            <motion.a
-              key={item.id}
-              href={`#${item.id}`}
-              className="nav-link"
-              custom={i}
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              whileHover={{ color: 'var(--primary-red)', scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.name}
-            </motion.a>
-          ))}
-        </div>
-
-        <div className="nav-actions">
-          <motion.button 
-            className="dark-mode-toggle glass-button"
-            onClick={toggleDarkMode}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle Dark Mode"
-          >
-            {isDarkMode ? (
-              <i className="fa-solid fa-moon"></i>
-            ) : (
-              <i className="fa-solid fa-sun"></i>
-            )}
-          </motion.button>
-
-          <button className="hamburger" onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
-    </motion.nav>
-  )
-}
-
-export default Navbar
+export default Navbar;

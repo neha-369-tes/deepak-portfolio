@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import Skills from './components/Skills'
 import ScrollingText from './components/ScrollingText'
-import Experience from './components/Experience'
-import Achievements from './components/Achievements'
 import WallOfFame from './components/WallOfFame'
-import Contact from './components/Contact'
+import Testimonial from './components/Testimonial'
 import AnimatedBg from './components/AnimatedBg'
 import ScrollOverlay from './components/ScrollOverlay'
 import ScrollFloat from './components/ScrollFloat' // Import the ScrollFloat component
+import { SparklesIntro } from './components/SparklesIntro' // Import the new Sparkles Intro
 import './App.css'
+
+const About = lazy(() => import('./components/About'))
+const Skills = lazy(() => import('./components/Skills'))
+const Experience = lazy(() => import('./components/Experience'))
+const Achievements = lazy(() => import('./components/Achievements'))
+const Contact = lazy(() => import('./components/Contact'))
 
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -35,15 +38,19 @@ function App() {
       {/* Moving element that follows the scroll */}
       <ScrollFloat />
       <main>
+        <SparklesIntro />
         <Hero />
         <ScrollOverlay />
-        <About />
-        <Skills />
-        <ScrollingText />
-        <Experience />
-        <Achievements />
-        <WallOfFame />
-        <Contact />
+        <Suspense fallback={<div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Loading...</div>}>
+          <About />
+          <Skills />
+          <ScrollingText />
+          <Experience />
+          <Achievements />
+          <WallOfFame />
+          <Testimonial />
+          <Contact />
+        </Suspense>
       </main>
       <footer className="footer">
         <div className="footer-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>

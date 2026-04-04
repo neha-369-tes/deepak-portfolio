@@ -135,7 +135,7 @@ body:not(.dark-mode) footer.footer p {
 
 /* Trigger Hot Reload */
 
-.neon-text-footer { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: inherit; }
+.neon-text-footer { font-family: 'Anton', 'Tusker Grotesk', 'Oswald', 'Arial Narrow', sans-serif; font-size: 1.5rem; letter-spacing: 1px; color: inherit; }
 
 @media (max-width: 768px) {
   .footer-content { padding: 15px 10px; gap: 8px !important; text-align: center; }

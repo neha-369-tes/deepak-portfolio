@@ -142,9 +142,8 @@ const Achievements = () => {
       </div>
 
       <div className="achievements-content">
-        {/* Marker: Move to far right to avoid content overlap */}
-        <div id="marker-achievements" className="scroll-marker" style={{ top: '50%', right: '2%' }}></div>
-          
+        <div id="marker-achievements" className="scroll-marker" style={{ top: '50%', right: '10%' }}></div>
+
           <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '40px' }}>
             <h2 className="achievements-title">Achieve<span>.</span>ments</h2>
           </div>

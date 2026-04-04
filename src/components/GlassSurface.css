@@ -1,0 +1,28 @@
+.glass-surface-container {
+  position: relative;
+  overflow: visible;
+}
+
+.glass-surface-effect {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.glass-surface-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+body.dark-mode .glass-surface-effect {
+  background: rgba(0, 0, 0, 0.2);
+}

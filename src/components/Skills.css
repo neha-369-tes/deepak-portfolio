@@ -1,3 +1,4 @@
+@import url('./Skills_scroll.css');
 .ex {
   padding: 100px 0;
   background: var(--off-white);
@@ -64,61 +65,42 @@
   opacity: 0.3;
 }
 
-/* Marquee Animation */
+/* Scrollable Wrapper */
 .marquee-wrapper {
   width: 100%;
-  overflow: hidden;
-  /* Mask for fade effect on logic edges */
-  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.marquee-wrapper::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 .marquee-content {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   width: max-content;
-  padding: 10px 0; /* Add space for shadow */
-}
-
-/* Marquee Directions */
-.marquee-left {
-  animation: marquee-left linear infinite;
-}
-
-.marquee-right {
-  animation: marquee-right linear infinite;
-}
-
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-/* Hover Pausing */
-.marquee-wrapper:hover .marquee-content {
-  animation-play-state: paused; 
+  padding: 10px max(5vw, 20px);
 }
 
 /* Skill Card - Glassmorphism Light Mode */
 .sk {
-  flex: 0 0 320px; /* Fixed width cards */
-  background: var(--glass-bg, rgba(255, 255, 255, 0.7)); /* Frosted glass white */
+  flex: 0 0 260px; /* Small fixed width cards for PC */
+  scroll-snap-align: start;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.7));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 16px;
-  padding: 24px;
-  box-shadow: 
+  padding: 20px;
+  box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.02),
     0 10px 15px -3px rgba(0, 0, 0, 0.03),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5); /* Inner highlight */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  cursor: default;
   position: relative;
   overflow: hidden;
 }
@@ -126,7 +108,7 @@
 .sk:hover {
   transform: translateY(-8px) scale(1.02);
   background: var(--glass-bg, rgba(255, 255, 255, 0.9));
-  box-shadow: 
+  box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.05),
     0 10px 10px -5px rgba(0, 0, 0, 0.02);
   z-index: 2;
@@ -135,13 +117,13 @@
 /* Card Content */
 .sk-cat {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   border: 1px solid transparent;
 }
 
@@ -165,17 +147,17 @@
 }
 
 .sk-name {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--dark-gray);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   line-height: 1.3;
 }
 
 .sk-desc {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.5;
   font-weight: 400;
 }
 
@@ -207,18 +189,37 @@
   .ex-title {
     font-size: 2.5rem;
   }
-  
+
   .sk {
-    flex: 0 0 280px;
-    padding: 20px;
+    flex: 0 0 200px; /* Evan smaller width for mobile */
+    padding: 15px;
   }
-  
+
+  .sk-name {
+    font-size: 1rem; /* Smaller title on mobile */
+  }
+
+  .sk-desc {
+    font-size: 0.8rem; /* Smaller desc on mobile */
+  }
+
   .marquee-content {
-    gap: 1.5rem;
+    gap: 1rem;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  
+
   .row-label {
     margin-left: 20px;
     font-size: 0.8rem;
   }
 }
+
+.marquee-wrapper { user-select: none; -webkit-user-select: none; touch-action: pan-x pan-y; }
+
+
+.marquee-wrapper { overflow-x: scroll; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+
+
+
+

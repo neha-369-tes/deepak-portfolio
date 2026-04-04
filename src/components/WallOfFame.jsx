@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './WallOfFame.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Certifications from './Certifications';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,8 +30,13 @@ const WallOfFame = () => {
 
   return (
     <section id="wall-of-fame" ref={sectionRef} className="wall-of-fame-section">
+      <div id="marker-wall" className="scroll-marker" style={{ top: '50%', left: '10%' }}></div>
+      <div className="wall-of-fame-bg"></div>
+
       <div className="fame-header">
-        <h2>Wall <span>Of</span> Fame</h2>
+        <h2 className="experience-title" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, color: 'var(--dark-gray)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none', fontFamily: 'Tusker Grotesk' }}>
+          Wall<span style={{ color: 'var(--primary-red)' }}>.</span>Of<span style={{ color: 'var(--primary-red)' }}>.</span>Fame
+        </h2>
         <p className="fame-subtitle">Deepak Kathiravan &mdash; Excellence in Esports &amp; Technology</p>
       </div>
       
@@ -90,6 +96,9 @@ const WallOfFame = () => {
         </div>
         
       </div>
+
+      <Certifications />
+      
     </section>
   );
 };

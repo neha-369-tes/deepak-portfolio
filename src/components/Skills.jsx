@@ -1,4 +1,4 @@
-// Light-mode dynamic skills marquee
+import React, { useRef, useState } from 'react';
 import MagneticBg from './MagneticBg';
 import './Skills.css';
 
@@ -39,7 +39,7 @@ const SkillCard = ({ item }) => {
   if (item.category === 'Soft') catClass = 'cat-soft';
   
   return (
-    <div className="sk">
+    <div className="sk" style={{ userSelect: 'none' }}>
       <span className={`sk-cat ${catClass}`}>{item.category}</span>
       <div className="sk-name">{item.name}</div>
       <div className="sk-desc">{item.desc}</div>
@@ -47,18 +47,20 @@ const SkillCard = ({ item }) => {
   );
 };
 
-const MarqueeRow = ({ title, items, direction = 'left', speed = 40 }) => {
+const MarqueeRow = ({ title, items }) => {
+  const scrollRef = useRef(null);
+
   return (
     <div className="skill-row-container">
       <div className="row-label">{title}</div>
-      <div className="marquee-wrapper">
-        <div className={`marquee-content marquee-${direction}`} style={{ animationDuration: `${speed}s` }}>
-          {items.map((item, index) => (
+      <div
+        className="marquee-wrapper"
+        ref={scrollRef}
+        style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        <div className="marquee-content">
+          {[...items, ...items].map((item, index) => (
             <SkillCard key={`skills-${index}`} item={item} />
-          ))}
-          {/* Duplicate for infinite loop */}
-          {items.map((item, index) => (
-            <SkillCard key={`skills-dup-${index}`} item={item} />
           ))}
         </div>
       </div>
@@ -81,9 +83,9 @@ const Skills = () => {
           <h2 className="ex-title">Expert<span>.</span>ise</h2>
         </div>
 
-        <MarqueeRow title="Technical Skills" items={skillData.technical} direction="left" speed={30} />
-        <MarqueeRow title="Esports Expertise" items={skillData.esports} direction="right" speed={35} />
-        <MarqueeRow title="Other Competencies" items={skillData.soft} direction="left" speed={40} />
+        <MarqueeRow title="Technical Skills" items={skillData.technical} speed={1} />
+        <MarqueeRow title="Esports Expertise" items={skillData.esports} speed={1} />
+        <MarqueeRow title="Other Competencies" items={skillData.soft} speed={1} />
       </div>
     </section>
   );
