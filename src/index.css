@@ -53,6 +53,8 @@ body {
 
 h1, h2, h3, h4, h5, h6, .section-title, .achievements-title, .expertise-tools-title, .experience-title {
   font-family: 'Tusker Grotesk', 'Tusker-Grotesk', 'TuskerGrotesk', sans-serif !important;
+  color: var(--primary-red) !important;
+  text-transform: uppercase !important;
   letter-spacing: 1px;
 }
 
@@ -83,5 +85,5 @@ body.dark-mode .animated-bg {
   opacity: 0.9;
 }
 
-@font-face { font-family: 'Tusker Grotesk'; src: local('Tusker Grotesk'); } h1, h2, h3, h4, h5, h6, .section-title, .achievements-title, .expertise-tools-title, .experience-title, .ex-title, .fame-item h3 { font-family: 'Tusker Grotesk', 'Tusker-Grotesk', 'TuskerGrotesk', sans-serif !important; }
+@font-face { font-family: 'Tusker Grotesk'; src: local('Tusker Grotesk'); } h1, h2, h3, h4, h5, h6, .section-title, .achievements-title, .expertise-tools-title, .experience-title, .ex-title, .fame-item h3 { font-family: 'Tusker Grotesk', 'Tusker-Grotesk', 'TuskerGrotesk', sans-serif !important; color: var(--primary-red) !important; text-transform: uppercase !important; }
 

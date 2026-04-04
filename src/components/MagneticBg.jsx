@@ -17,14 +17,20 @@ const MagneticBg = () => {
     const SPACING = 40; // Space between filings
     const LEN = 14; // Length of each line
 
-    // Mouse tracker
+    // Mouse & Touch tracker
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
-      mx = e.clientX - rect.left;
-      my = e.clientY - rect.top;
+      const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+      if (clientX !== undefined && clientY !== undefined) {
+        mx = clientX - rect.left;
+        my = clientY - rect.top;
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleMouseMove, { passive: true });
+    window.addEventListener('touchstart', handleMouseMove, { passive: true });
 
     // Initialize filings grid
     const init = () => {
@@ -106,6 +112,8 @@ const MagneticBg = () => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleMouseMove);
+      window.removeEventListener('touchstart', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
