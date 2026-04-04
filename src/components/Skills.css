@@ -73,6 +73,7 @@
   scrollbar-width: none; /* Firefox */
   padding-bottom: 20px;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
 .marquee-wrapper::-webkit-scrollbar {

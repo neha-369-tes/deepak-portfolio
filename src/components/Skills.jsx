@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import MagneticBg from './MagneticBg';
 import './Skills.css';
 
@@ -49,6 +49,56 @@ const SkillCard = ({ item }) => {
 
 const MarqueeRow = ({ title, items }) => {
   const scrollRef = useRef(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const autoScrollIntervalRef = useRef(null);
+  const pauseTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const startAutoScroll = () => {
+      if (!scrollRef.current) return;
+
+      autoScrollIntervalRef.current = setInterval(() => {
+        if (scrollRef.current && isAutoScrolling) {
+          scrollRef.current.scrollLeft += 1;
+        }
+      }, 30);
+    };
+
+    startAutoScroll();
+
+    return () => {
+      if (autoScrollIntervalRef.current) {
+        clearInterval(autoScrollIntervalRef.current);
+      }
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, [isAutoScrolling]);
+
+  const handleUserInteraction = () => {
+    setIsAutoScrolling(false);
+
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsAutoScrolling(true);
+    }, 3000);
+  };
+
+  const handleMouseDown = () => {
+    handleUserInteraction();
+  };
+
+  const handleTouchStart = () => {
+    handleUserInteraction();
+  };
+
+  const handleScroll = () => {
+    handleUserInteraction();
+  };
 
   return (
     <div className="skill-row-container">
@@ -57,6 +107,9 @@ const MarqueeRow = ({ title, items }) => {
         className="marquee-wrapper"
         ref={scrollRef}
         style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onScroll={handleScroll}
       >
         <div className="marquee-content">
           {[...items, ...items].map((item, index) => (
