@@ -35,7 +35,7 @@ const WallOfFame = () => {
 
       <div className="fame-header">
         <h2 className="experience-title" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, color: 'var(--dark-gray)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none', fontFamily: 'Tusker Grotesk' }}>
-          Wall<span style={{ color: 'var(--primary-red)' }}>.</span>Of<span style={{ color: 'var(--primary-red)' }}>.</span>Fame
+          <span className="th-text">Wall</span><span className="th-dot">.</span><span className="th-text">Of</span><span className="th-dot">.</span><span className="th-red">Fame</span>
         </h2>
         <p className="fame-subtitle">Deepak Kathiravan &mdash; Excellence in Esports &amp; Technology</p>
       </div>

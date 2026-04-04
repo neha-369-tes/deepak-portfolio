@@ -36,10 +36,9 @@ body:not(.dark-mode) .th-dot {
   font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
 }
 
-.glow-brace {
-  color: #00e5ff !important;
+.yellow-brace {
+  color: #ffd700 !important;
   font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
 }
 
 :root {
