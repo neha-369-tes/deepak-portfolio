@@ -102,6 +102,10 @@ const Certifications = () => {
     setActiveItem(cert);
   };
 
+  const handleClose = () => {
+    setActiveItem(null);
+  };
+
   return (
     <div className="certifications-section">
       <h3 className="certifications-subtitle"><span className="th-text">Certifications</span><span className="th-dot">.</span></h3>
