@@ -5,10 +5,10 @@ const certificates = [
   { id: 1, name: 'AI Fusion 1.0', src: '/certifications/Ai-fusion-1.0.jpeg', type: 'img' },
   { id: 2, name: 'Bit by Bit', src: '/certifications/bit-by-bit.jpeg', type: 'img' },
   { id: 3, name: 'Cloud Kickstart', src: '/certifications/cloud-kickstart.jpeg', type: 'img' },
-  { id: 4, name: 'Deepak Kathiravan (1)', src: '/certifications/DEEPAK-KATHIRAVAN-(1).pdf', type: 'pdf' },
-  { id: 5, name: 'Certificate of Completion', src: '/certifications/Deepak-kathiravan-s-Certificate-of-Completion.pdf', type: 'pdf' },
+  { id: 4, name: 'Deepak Kathiravan (1)', src: '/certifications/DEEPAK KATHIRAVAN (1)-1.png', type: 'img' },
+  { id: 5, name: 'Certificate of Completion', src: '/certifications/Deepak kathiravan s Certificate of Completion-1.png', type: 'img' },
   { id: 6, name: 'Innovit St Joseph', src: '/certifications/innovit-st-joseph.jpeg', type: 'img' },
-  { id: 7, name: 'Internship Completion', src: '/certifications/internship-completion-certificate-deepak.pdf', type: 'pdf' },
+  { id: 7, name: 'Internship Completion', src: '/certifications/internship completion certificate deepak-1.png', type: 'img' },
   { id: 8, name: 'Visit to CEGC', src: '/certifications/visit-to-cegc.jpeg', type: 'img' }
 ];
 
