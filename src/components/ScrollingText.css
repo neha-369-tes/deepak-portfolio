@@ -43,22 +43,26 @@
 
   /* Light Theme */
   body:not(.dark-mode) .scrolling-text .rail h4 {
-    color: #fff !important;
-    -webkit-text-stroke: 0 !important;
+    color: transparent !important;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.8) !important;
   }
 
   /* Dark Theme */
   body.dark-mode .scrolling-text .rail h4 {
-    color: #000 !important;
-    -webkit-text-stroke: 0 !important;
+    color: transparent !important;
+    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.8) !important;
   }
 
   /* Hover effect handling if desired */
-  body:not(.dark-mode) .scrolling-text:hover .rail h4 {
-      color: #ccc !important;
+  body:not(.dark-mode) .scrolling-text:hover .rail h4,
+  body:not(.dark-mode) .scrolling-text:active .rail h4 {
+      color: #fff !important;
+      -webkit-text-stroke: 2px #fff !important;
   }
-  body.dark-mode .scrolling-text:hover .rail h4 {
-      color: #333 !important;
+  body.dark-mode .scrolling-text:hover .rail h4,
+  body.dark-mode .scrolling-text:active .rail h4 {
+      color: #000 !important;
+      -webkit-text-stroke: 2px #000 !important;
   }
 
   @media (max-width: 768px) {
