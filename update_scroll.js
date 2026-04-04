@@ -1,31 +1,27 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Flip } from 'gsap/Flip';
-import './ScrollFloat.css';
+const fs = require('fs');
+let code = fs.readFileSync('src/components/ScrollFloat.jsx', 'utf8');
 
-gsap.registerPlugin(ScrollTrigger, Flip);
-
-const ScrollFloat = () => {
-    const elRef = useRef(null);
-    
-    useLayoutEffect(() => {
-        const el = elRef.current;
+const replacement = \    useLayoutEffect(() => {
         let tl;
         let stColor;
         let resizeTimeout;
         let initTimeout;
 
         const buildTimeline = () => {
+            const el = elRef.current;
             if (!el) return;
-            const markers = Array.from(document.querySelectorAll('.scroll-marker'));
-            if (markers.length === 0) return;
 
             if (tl) {
                 if (tl.scrollTrigger) tl.scrollTrigger.kill();
                 tl.kill();
             }
-            if (stColor) stColor.kill();
+            if (stColor) {
+                stColor.kill();
+            }
+
+            const markers = Array.from(document.querySelectorAll('.scroll-marker'));
+            
+            if (markers.length === 0) return;
 
             markers.sort((a, b) => {
                 return (a.getBoundingClientRect().top + window.scrollY) - (b.getBoundingClientRect().top + window.scrollY);
@@ -39,13 +35,13 @@ const ScrollFloat = () => {
                 };
             };
 
-            const ballRadius = window.innerWidth <= 768 ? 20 : 35;
+            const ballRadius = 35;
             const H = window.innerHeight;
             const maxScroll = Math.max(1, document.documentElement.scrollHeight - H);
             const fixedTop = H / 2 - ballRadius;
 
             const m0 = getRect(markers[0]);
-            gsap.set(el, {
+            gsap.set(el, { 
                 position: 'fixed',
                 top: fixedTop,
                 left: m0.cx - ballRadius,
@@ -76,21 +72,21 @@ const ScrollFloat = () => {
 
                 if (i === 0) startScroll = 0;
 
-                const isLastStep = (i === markers.length - 2);
+                const isLastStep = (i === markers.length - 2); 
 
-                let destX = mNext.cx - ballRadius;
-                let destTop = fixedTop; 
+                let destX = mNext.cx - Math.min(ballRadius, mNext.cx);
+                let destTop = fixedTop;
 
                 if (isLastStep) {
                     endScroll = maxScroll;
                     const viewportYAtEnd = mNext.cy - maxScroll;
-                    destTop = viewportYAtEnd - ballRadius;
+                    destTop = Math.max(0, viewportYAtEnd - ballRadius);
                 }
 
                 const timeDuration = Math.max(1, endScroll - startScroll);
 
                 tl.to(el, {
-                    left: destX,
+                    left: mNext.cx - ballRadius,
                     top: destTop,
                     ease: isLastStep ? "power2.inOut" : "none",
                     duration: timeDuration
@@ -98,15 +94,15 @@ const ScrollFloat = () => {
             });
 
             tl.to(el, {
-                opacity: 0,
-                duration: 30,  
+                opacity: 0, 
+                duration: 30, // Fades out over the last 30 pixels of scroll        
                 onStart: () => window.dispatchEvent(new CustomEvent('ball-undocked')),
                 onComplete: () => window.dispatchEvent(new CustomEvent('ball-docked')),
                 onReverseComplete: () => window.dispatchEvent(new CustomEvent('ball-undocked'))
             }, Math.max(0, maxScroll - 30));
 
             const floatContainer = el.querySelector('.ball-float-container');       
-
+            
             stColor = ScrollTrigger.create({
                 trigger: '#achievements',
                 start: "top center", 
@@ -132,43 +128,27 @@ const ScrollFloat = () => {
             }, 300);
         };
 
-        // Give the DOM a moment to fully render/paint before calculating positions
         initTimeout = setTimeout(() => {
             buildTimeline();
-            ScrollTrigger.refresh();
-        }, 500);
+        }, 300);
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('load', handleResize);
-
-        let resizeObserver;
-        if (typeof ResizeObserver !== 'undefined') {
-            resizeObserver = new ResizeObserver(() => handleResize());
-            resizeObserver.observe(document.body);
-        }
 
         return () => {
             clearTimeout(initTimeout);
             clearTimeout(resizeTimeout);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('load', handleResize);
-            if (resizeObserver) resizeObserver.disconnect();
             if (tl) {
                 if (tl.scrollTrigger) tl.scrollTrigger.kill();
                 tl.kill();
             }
             if (stColor) stColor.kill();
         };
+        
+    }, []);\
 
-    }, []);
-
-    return (
-        <div ref={elRef} className="moving-element-wrapper">
-            <div className="ball-float-container">
-                <div className="ball-inner"></div>
-            </div>
-        </div>
-    );
-};
-
-export default ScrollFloat;
+code = code.replace(/useLayoutEffect\\(\\) => \\{[\\s\\S]*?\\}, \\[\\]\\);/, replacement);
+fs.writeFileSync('src/components/ScrollFloat.jsx', code);
+console.log('Scroll Float updated');

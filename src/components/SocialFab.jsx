@@ -194,8 +194,15 @@ const SocialFab = () => {
     setIsOpen(!isOpen);
   }
 
-  // Calculate position for items in a full circle around the button
-  const radius = 130; // Increased radius for more separation
+  const [radius, setRadius] = useState(typeof window !== 'undefined' && window.innerWidth <= 768 ? 90 : 130);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setRadius(window.innerWidth <= 768 ? 90 : 130);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   return (
     <>

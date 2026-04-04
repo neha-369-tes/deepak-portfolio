@@ -30,8 +30,8 @@ export function SparklesIntro() {
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 768;
-      // Decreased gridSize to make boxes seem fewer and larger on mobile
-      setGridSize(isMobile ? 15 : 20);
+      // Increased gridSize to make boxes smaller and more numerous on mobile
+      setGridSize(isMobile ? 30 : 20);
       setVignette(isMobile ? 0 : 2);
     };
     handleResize();

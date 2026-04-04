@@ -57,22 +57,9 @@ const Navbar = ({ scrollProgress }) => {
 
   return (
     <div className="navbar-dock-wrapper">
-      <GlassSurface
-        width="auto"
-        height={65}
-        borderRadius={50}
-        displace={0.5}
-        distortionScale={-80}
-        redOffset={10}
-        greenOffset={5}
-        blueOffset={15}
-        brightness={110}
-        opacity={0.8}
-        mixBlendMode="normal"
-        className="custom-glass-nav"
-      >
+      <div className="custom-glass-nav">
         <FloatingDock items={links} />
-      </GlassSurface>
+      </div>
     </div>
   );
 };

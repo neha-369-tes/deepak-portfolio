@@ -175,7 +175,7 @@ const Contact = () => {
             </div>
 
             {/* Social FAB Dock Container - Bottom Right of this column */}
-            <div style={{ position: 'relative', height: '100px', width: '100%', marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
+              <div className="fab-dock-container">
                  {/* Wrapper for both FAB and Marker to ensure perfect alignment */}
                  <div style={{ position: 'relative', width: '72px', height: '72px' }}>
                     {/* The Marker for the Ball - absolute to wrapper */}

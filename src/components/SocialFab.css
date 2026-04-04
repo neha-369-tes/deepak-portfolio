@@ -262,3 +262,25 @@
     0%   { transform: translate(0,0) scale(1); opacity:1; }
     100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity:0; }
   }
+
+/* Responsive FAB */
+@media (max-width: 768px) {
+  .fab-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .fab-item {
+    bottom: 25px;
+    right: 25px;
+  }
+  .fab-main {
+    width: 56px;
+    height: 56px;
+    font-size: 1.8rem;
+  }
+  .fab-main-wrap {
+    width: 56px;
+    height: 56px;
+  }
+}

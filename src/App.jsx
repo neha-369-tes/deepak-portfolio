@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense, lazy } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -10,13 +10,12 @@ import ScrollOverlay from './components/ScrollOverlay'
 import ScrollFloat from './components/ScrollFloat' // Import the ScrollFloat component
 import { SparklesIntro } from './components/SparklesIntro' // Import the new Sparkles Intro
 import NotFound from './components/NotFound'
+import About from './components/About'
+import Skills from './components/Skills'
+import Experience from './components/Experience'
+import Achievements from './components/Achievements'
+import Contact from './components/Contact'
 import './App.css'
-
-const About = lazy(() => import('./components/About'))
-const Skills = lazy(() => import('./components/Skills'))
-const Experience = lazy(() => import('./components/Experience'))
-const Achievements = lazy(() => import('./components/Achievements'))
-const Contact = lazy(() => import('./components/Contact'))
 
 function MainContent() {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -43,16 +42,14 @@ function MainContent() {
         <SparklesIntro />
         <Hero />
         <ScrollOverlay />
-        <Suspense fallback={<div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Loading...</div>}>
-          <About />
-          <Skills />
-          <ScrollingText />
-          <Experience />
-          <Achievements />
-          <WallOfFame />
-          <Testimonial />
-          <Contact />
-        </Suspense>
+        <About />
+        <Skills />
+        <ScrollingText />
+        <Experience />
+        <Achievements />
+        <WallOfFame />
+        <Testimonial />
+        <Contact />
       </main>
       <footer className="footer">
         <div className="footer-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
