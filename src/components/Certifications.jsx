@@ -95,6 +95,10 @@ const Certifications = () => {
       e.preventDefault();
       return; // Do not open lightbox if dragged
     }
+    if (cert.type === 'pdf') {
+      window.open(cert.src, '_blank');
+      return;
+    }
     setActiveItem(cert);
   };
 
