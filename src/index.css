@@ -14,6 +14,34 @@ html {
 }
 
 /* Color Scheme: Minimal Red & White (and dynamic Black & Red) */
+/* Global Title Styling Helpers */
+.th-text {
+  color: #ffffff !important;
+  font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
+}
+body:not(.dark-mode) .th-text {
+  color: #000000 !important;
+}
+
+.th-dot {
+  color: #000000 !important;
+  font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
+}
+body:not(.dark-mode) .th-dot {
+  color: #ffffff !important;
+}
+
+.th-red {
+  color: #dc143c !important; /* var(--primary-red) */
+  font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
+}
+
+.glow-brace {
+  color: #00e5ff !important;
+  font-family: 'Tusker Grotesk', 'Tusker-Grotesk', sans-serif !important;
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+}
+
 :root {
   --primary-red: #dc143c;
   --dark-red: #8b0000;

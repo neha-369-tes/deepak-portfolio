@@ -81,10 +81,7 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Connect<span>.</span>Me
-        </motion.h2>
-
-        <motion.div
+            <span className="th-text">Connect</span><span className="th-dot">.</span><span className="th-red">Me</span>
           className="contact-content"
           variants={containerVariants}
           initial="hidden"

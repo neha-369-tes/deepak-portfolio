@@ -145,7 +145,7 @@ const Achievements = () => {
         <div id="marker-achievements" className="scroll-marker" style={{ top: '50%', right: '10%' }}></div>
 
           <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <h2 className="achievements-title">Achieve<span>.</span>ments</h2>
+            <h2 className="achievements-title"><span className="th-text">Achieve</span><span className="th-dot">.</span><span className="th-red">ments</span><span className="th-dot">.</span></h2>
           </div>
 
           <div className="container" ref={containerRef}>

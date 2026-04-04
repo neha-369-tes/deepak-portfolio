@@ -14,8 +14,7 @@ const Testimonial = () => {
         transition={{ duration: 0.8 }}
       >
         <h2 className="section-title experience-title" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, color: 'var(--dark-gray)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none' }}>
-          What<span>.</span>People<span>.</span>Say
-        </h2>
+            <span className="th-text">What</span><span className="th-dot">.</span><span className="th-text">People</span><span className="th-dot">.</span><span className="th-red">Say</span>
 
         <div className="testimonial-card">
           <div className="testimonial-content">

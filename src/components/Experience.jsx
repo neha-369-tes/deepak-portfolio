@@ -41,7 +41,7 @@ const Experience = () => {
         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
           <div className="section-header-centered" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 className="experience-title" style={{ fontSize: '5rem', fontWeight: 700, color: 'var(--black)', margin: 0, lineHeight: 1.1, letterSpacing: '-2px', textTransform: 'none' }}>
-            Work<span>.</span>Experience
+            <span className="th-text">Work</span><span className="th-dot">.</span><span className="th-text">&amp;</span><span className="th-dot">.</span><span className="th-red">Experience</span>
           </h2>
         </div>
         <div className="row">

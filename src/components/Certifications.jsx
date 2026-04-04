@@ -100,7 +100,7 @@ const Certifications = () => {
 
   return (
     <div className="certifications-section">
-      <h3 className="certifications-subtitle">Certifications</h3>
+      <h3 className="certifications-subtitle"><span className="th-text">Certifications</span><span className="th-dot">.</span></h3>
       
       <div 
         className="certifications-track-container"
