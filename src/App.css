@@ -143,3 +143,11 @@ body:not(.dark-mode) footer.footer p {
   footer.footer p { font-size: 13px !important; line-height: 1.4; padding: 0 10px; }
   .neon-text-footer { font-size: 1.2rem !important; }
 }
+
+/* Card Reveal wrapper */
+.card-reveal-wrapper {
+  transform-origin: center center;
+  position: relative;
+  will-change: transform, opacity;
+  z-index: 10;
+}
