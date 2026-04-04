@@ -37,7 +37,7 @@
     line-height: 1;
     margin: 0 40px 0 0; /* Space between words */
     text-transform: uppercase;
-    font-family: 'Oswald', sans-serif; /* If available, or inherit */
+    font-family: 'Oswald', 'Arial Narrow', sans-serif !important;
     transition: color 0.3s ease;
   }
 
@@ -59,6 +59,9 @@
   }
   body.dark-mode .scrolling-text:hover .rail h4 {
       color: #333 !important;
+  }
+
+  @media (max-width: 768px) {
     .scrolling-text .rail h4 {
         font-size: 4rem;
         margin-right: 20px;
