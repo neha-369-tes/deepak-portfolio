@@ -70,18 +70,21 @@ body.dark-mode .floating-dock-icon-wrapper {
   font-size: 12px;
   font-weight: 600;
   color: #fff;
-  background-color: #222;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid #444;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 50, 50, 0.8);
+  box-shadow: 0 0 10px rgba(255, 50, 50, 0.6), 0 0 20px rgba(255, 50, 50, 0.4);
   border-radius: 6px;
   z-index: 50;
   pointer-events: none;
 }
 
 body.dark-mode .floating-dock-tooltip {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
   color: #000;
-  border-color: #ddd;
+  border-color: rgba(255, 0, 0, 0.9);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.6);
 }
 
 .floating-dock-icon {
