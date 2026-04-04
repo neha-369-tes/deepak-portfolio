@@ -1,13 +1,20 @@
 .scrolling-text-section {
     position: relative;
     width: 100%;
-    background-color: #000;
     overflow: hidden;
     padding: 2rem 0; /* Add some spacing */
     z-index: 5;
     /* Ensure it sits above or below correctly */
   }
-  
+
+  body:not(.dark-mode) .scrolling-text-section {
+    background-color: #000;
+  }
+
+  body.dark-mode .scrolling-text-section {
+    background-color: #fff;
+  }
+
   .scrolling-text {
     width: 100%;
     display: flex;
@@ -15,7 +22,7 @@
     background-color: transparent; /* Assuming section handles bg */
     white-space: nowrap;
   }
-  
+
   .scrolling-text .rail {
     display: flex;
     justify-content: flex-start;
@@ -29,21 +36,29 @@
     font-weight: 900;
     line-height: 1;
     margin: 0 40px 0 0; /* Space between words */
-    /* Hollow text effect? Or just white? User said "Driven by Culture" */
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.8);
     text-transform: uppercase;
     font-family: 'Oswald', sans-serif; /* If available, or inherit */
-    
-    /* Make it look "Culture" style */
     transition: color 0.3s ease;
   }
-  
-  .scrolling-text:hover .rail h4 {
-      color: #fff;
+
+  /* Light Theme */
+  body:not(.dark-mode) .scrolling-text .rail h4 {
+    color: #fff !important;
+    -webkit-text-stroke: 0 !important;
   }
-  
-  @media (max-width: 768px) {
+
+  /* Dark Theme */
+  body.dark-mode .scrolling-text .rail h4 {
+    color: #000 !important;
+    -webkit-text-stroke: 0 !important;
+  }
+
+  /* Hover effect handling if desired */
+  body:not(.dark-mode) .scrolling-text:hover .rail h4 {
+      color: #ccc !important;
+  }
+  body.dark-mode .scrolling-text:hover .rail h4 {
+      color: #333 !important;
     .scrolling-text .rail h4 {
         font-size: 4rem;
         margin-right: 20px;
