@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'AppleCustom';
+  src: url('/fonts/apple-custom.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.sct-physics-wrapper {
+  pointer-events: none; /* prevents the scroll space from capturing clicks outside animating bounds */
+}
+
+.sct-card-scene {
+  pointer-events: auto; /* re-enables interaction inside the cards */
+}
+
+.sct-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, width, height, background-color, border-color, autoAlpha;
+  overflow: hidden;
+}
+
+/* Light mode defaults */
+:root {
+  --card-bg: #fdfdfd;
+  --card-border: rgba(0, 0, 0, 0.15);
+  --card-color: #000;
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  --card-expanded-bg: #fdfdfd;
+}
+
+/* Dark mode overrides (assume body.dark-mode) */
+body.dark-mode {
+  --card-bg: #0a0a0a;
+  --card-border: rgba(255, 255, 255, 0.15);
+  --card-color: #fff;
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  --card-expanded-bg: #0a0a0a;
+}
+
+.sct-card.theme-adaptive {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--card-color);
+  box-shadow: var(--card-shadow);
+}
+
+/* Page Indicator for Left Side */
+.sct-page-indicator {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'AppleCustom', cursive; /* Applied the custom Apple font here too! */
+  font-weight: 400; /* Removed bold to keep the cursive elegant */
+  font-size: 2rem; /* slightly increased from 1.5rem to accommodate the script style */
+  text-align: left;
+  line-height: 1;
+  text-transform: capitalize; /* Removed forced uppercase so the cursive connects nicely */
+  opacity: 0.9;
+}
+
+.sct-page-indicator span {
+  display: block;
+  font-size: 5rem; /* Made slightly larger for the Apple font number to stand out */
+  margin-top: 8px;
+}
+
+/* Beautiful Morph Text (Now SVG Text matching Apple stroke style) */
+.sct-morph-text {
+  font-family: 'AppleCustom', cursive;
+  font-weight: 400;
+  font-size: 3rem; /* You can adjust this to fit the new font perfectly */
+  text-transform: capitalize; /* Ensures cursive doesn't stay in hard-to-read ALL CAPS */
+  letter-spacing: 1px;
+  stroke: var(--card-color);
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  fill: var(--card-color);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Clean Arrows FX Layout */
+.sct-arrows-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.sct-chevron {
+  width: 40px;
+  height: 40px;
+  border-right: 3px solid var(--card-color);
+  border-bottom: 3px solid var(--card-color);
+  transform: rotate(45deg);
+  margin-top: -15px; /* Overlap them slightly */
+  animation: chevron-pulse 2s infinite;
+  opacity: 0;
+}
+
+.sct-chevron:nth-child(1) { animation-delay: 0s; }
+.sct-chevron:nth-child(2) { animation-delay: 0.2s; }
+.sct-chevron:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes chevron-pulse {
+  0% { opacity: 0; transform: rotate(45deg) translate(-10px, -10px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(45deg) translate(10px, 10px); }
+}
+
+@media (max-width: 768px) {
+  .sct-card {
+    width: 85vw; /* Fluid scaling on mobile screens */
+    max-width: 280px; 
+    height: 340px;
+  }
+  .sct-page-indicator {
+    font-size: 1.5rem;
+  }
+  .sct-page-indicator span {
+    font-size: 3.5rem; /* slightly scaled down to keep inline */
+  }
+  .sct-morph-text {
+    font-size: clamp(1rem, 6vw, 1.4rem); /* Dynamic scale based on screen width to prevent cutoff */
+  }
+}
